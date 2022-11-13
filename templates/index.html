@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        background-color: #fdfdfd;
+    }
+
+    .head_text {
+        color: white;
+    }
+
+    .card {
+        box-shadow: 0 16px 48px #E3E7EB;
+    }
+</style>
+
+<header class="masthead">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h3 class=" site-heading my-4 mt-3 text-white"> A Community Driven Truth Engine </h3>
+                    <p class="text-light">We tell the truth, the whole truth, and nothing but the truth &nbsp
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <!-- Blog Entries Column -->
+        <div class="col-md-8 mt-3 left">
+            {% for thesis in thesis_list %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <!-- <h2 class="card-title">{{ thesis.title }}</h2> -->
+                    <p class="card-text aligned-left small">
+                        by {{ thesis.author }} on {{ thesis.created_on}}
+                    </p>
+                    <p class="card-text">{{thesis.content|slice:":200" }}</p>
+                    <div class="btn-group btn-group-sm mr-2" role="group" aria-label="First group">
+                        {% for tag in thesis.tags.all %}
+                        <button type="button" class="btn btn-secondary">{{ tag.property.text }}</button>
+                        {% endfor %}
+                    </div>
+                    <p class="card-text aligned-left small">
+
+                    </p>
+                    <a href="{% url 'thesis_detail' thesis.pk  %}" class="btn btn-primary">Read More &rarr;</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
+    </div>
+</div>
+{%endblock%}

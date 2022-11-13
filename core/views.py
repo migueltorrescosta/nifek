@@ -1,3 +1,12 @@
-from django.shortcuts import render
+from django.views import generic
+from .models import Thesis
 
-# Create your views here.
+
+class ThesisList(generic.ListView):
+    queryset = Thesis.objects.order_by('-created_on')
+    template_name = 'index.html'
+
+
+class ThesisDetail(generic.DetailView):
+    model = Thesis
+    template_name = 'thesis_detail.html'
