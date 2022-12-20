@@ -1,6 +1,6 @@
 # Nifek
 
-Django App for Thesis sharing and Tagging. Consists of a very simple Django app which serves pre-rendered HTML / CSS pages.
+Personal project to support all the tools I wanted to have available, tailored for me :D
 Based on https://djangocentral.com/building-a-blog-application-with-django/
 
 # Development setup
