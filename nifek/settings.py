@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "magiclink",
     "accounts",
     "core",
 ]
@@ -50,6 +51,11 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+
+AUTHENTICATION_BACKENDS = [
+    "magiclink.backends.MagicLinkBackend",
+    "django.contrib.auth.backends.ModelBackend",
 ]
 
 ROOT_URLCONF = "nifek.urls"
@@ -92,6 +98,44 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
+
+LOGIN_URL = "magiclink:login"
+MAGICLINK_LOGIN_TEMPLATE_NAME = "magiclink/login.html"
+MAGICLINK_LOGIN_SENT_TEMPLATE_NAME = "magiclink/login_sent.html"
+MAGICLINK_LOGIN_FAILED_TEMPLATE_NAME = "magiclink/login_failed.html"
+MAGICLINK_REQUIRE_SIGNUP = False
+MAGICLINK_LOGIN_SENT_REDIRECT = "magiclink:login_sent"
+
+# Ensure the branding of the login email is correct. This setting is not needed
+# if you override the `login_email.html` template
+MAGICLINK_EMAIL_STYLES = {
+    "logo_url": "",
+    "background-colour": "#ffffff",
+    "main-text-color": "#000000",
+    "button-background-color": "#0078be",
+    "button-text-color": "#ffffff",
+}
+
+MAGICLINK_AUTH_TIMEOUT = 24 * 60 * 60 * 7  # 1 week
+MAGICLINK_IGNORE_EMAIL_CASE = True
+MAGICLINK_EMAIL_AS_USERNAME = True
+MAGICLINK_ALLOW_SUPERUSER_LOGIN = True
+MAGICLINK_ALLOW_STAFF_LOGIN = True
+# Ignore the Django user model's is_active flag for login requests
+MAGICLINK_IGNORE_IS_ACTIVE_FLAG = True
+MAGICLINK_TOKEN_LENGTH = 100
+MAGICLINK_VERIFY_INCLUDE_EMAIL = True
+MAGICLINK_REQUIRE_SAME_BROWSER = False
+MAGICLINK_REQUIRE_SAME_IP = False
+MAGICLINK_ANONYMIZE_IP = True
+MAGICLINK_TOKEN_USES = 1
+MAGICLINK_LOGIN_REQUEST_TIME_LIMIT = 30  # In seconds
+# Disable all other tokens for a user when a new token is requested
+MAGICLINK_ONE_TOKEN_PER_USER = True
+MAGICLINK_ANTISPAM_FORMS = False
+MAGICLINK_ANTISPAM_FIELD_TIME = 1  # in seconds
+MAGICLINK_LOGIN_VERIFY_URL = "magiclink:login_verify"
+MAGICLINK_IGNORE_UNSUBSCRIBE_IF_USER = False
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"

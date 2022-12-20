@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-center  mt-4">
+<form action="{% url 'magiclink:login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="post">
+    {% csrf_token %}
+    {{ login_form }}
+    <button type='submit' class="btn btn-success">Send login email</button>
+</form>
+</div>
+</div>
+
+{%endblock%}

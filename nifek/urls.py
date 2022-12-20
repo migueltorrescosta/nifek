@@ -20,5 +20,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
+    path("auth/", include("magiclink.urls", namespace="magiclink")),
     path("", include("core.urls")),
 ]
