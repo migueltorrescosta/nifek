@@ -19,3 +19,23 @@ Based on https://djangocentral.com/building-a-blog-application-with-django/
 - Form rendering: https://django-crispy-forms.readthedocs.io/en/latest/
 - Bootstrap: https://getbootstrap.com/docs/4.0/getting-started/introduction/
 - Postgres 15: https://www.postgresql.org/about/news/postgresql-151-146-139-1213-1118-and-1023-released-2543/
+
+# Data Flows
+
+## Auth
+
+```mermaid
+  sequenceDiagram
+    participant email
+    participant user
+    participant browser
+    participant django
+    user->>browser: Login Button
+    browser->>django: GET /accounts/login
+    django->>browser: Login Form
+    browser->>django: POST /auth/login ( with email )
+    django->>email: Verification email with Magic Link
+    email->>user: Get Magic Link
+    user->>browser: Access authenticated resource
+    browser->>django: (optional) /auth/logout
+```
