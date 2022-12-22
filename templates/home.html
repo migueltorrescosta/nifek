@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block page_title %}Home{% endblock page_title %}
 {% block content %}
 
 <style>
@@ -20,30 +21,23 @@
 
 <div class="container">
     <div class="row">
-        <!-- Blog Entries Column -->
         <div class="col-md-8 mt-3 left">
-            {% for thesis in thesis_list %}
             <div class="card mb-4">
                 <div class="card-body">
-                    <!-- <h2 class="card-title">{{ thesis.title }}</h2> -->
-                    <p class="card-text aligned-left small">
-                        by {{ thesis.author }} on {{ thesis.created_on}}
-                    </p>
-                    <p class="card-text">{{thesis.content|slice:":200" }}</p>
+                    <p class="card-text">App focused on the tracking and evolution of support for different thesis over time</p>
                     <div class="btn-group btn-group-sm mr-2" role="group" aria-label="First group">
-                        {% for tag in thesis.tags.all %}
-                        <button type="button" class="btn btn-secondary">{{ tag.property.text }}</button>
+                        {% for tag in thes_tags %}
+                            <button type="button" class="btn btn-secondary">{{ tag }}</button>
                         {% endfor %}
                     </div>
                     <p class="card-text aligned-left small">
-
+                        Hello
                     </p>
-                    <a href="{% url 'thesis_detail' thesis.pk  %}" class="btn btn-primary">Read More &rarr;</a>
+                    <a href="{% url 'thes:thes' %}" class="btn btn-primary">Thes &rarr;</a>
                 </div>
             </div>
-            {% endfor %}
         </div>
-        {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
+        {% block sidebar %} {% include 'sidebars/base_sidebar.html' %} {% endblock sidebar %}
     </div>
 </div>
 {%endblock%}
