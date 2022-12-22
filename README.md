@@ -10,3 +10,12 @@ Based on https://djangocentral.com/building-a-blog-application-with-django/
 # Production setup
 
 - TBD
+
+# Tech Stack
+
+- Django ;P
+- Magic Links: https://github.com/pyepye/django-magiclink
+- Messages / Notifications: https://docs.djangoproject.com/en/4.1/ref/contrib/messages/
+- Form rendering: https://django-crispy-forms.readthedocs.io/en/latest/
+- Bootstrap: https://getbootstrap.com/docs/4.0/getting-started/introduction/
+- Postgres 15: https://www.postgresql.org/about/news/postgresql-151-146-139-1213-1118-and-1023-released-2543/

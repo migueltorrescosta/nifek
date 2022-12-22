@@ -21,6 +21,7 @@ class ThesisList(generic.ListView):
         return context
 
     def post(self, request):
+
         if not request.user.is_authenticated:
             messages.add_message(
                 request,
@@ -29,13 +30,15 @@ class ThesisList(generic.ListView):
             )
             return HttpResponseRedirect("/thes/")
         form = ThesisForm(data=request.POST)
+
         if not form.is_valid():
             messages.add_message(
                 request,
                 messages.ERROR,
-                "Invalid Thesis",
+                "The submitted Thesis is invalid",
             )
             return HttpResponseRedirect("/thes/")
+
         thesis = form.save(commit=False)
         thesis.author = request.user
         thesis.save()
