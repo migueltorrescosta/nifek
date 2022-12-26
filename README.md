@@ -3,6 +3,14 @@
 Personal project to support all the tools I wanted to have available, tailored for me :D
 Based on https://djangocentral.com/building-a-blog-application-with-django/
 
+# Todo
+
+- Mott: Mottery App
+- Anki: Anki Like app
+- MeBa: Diagram maker to increase our Mental Bandwith
+- Ping: `Uptime Robot` like app
+- Mova: Visually compare Monetary Values
+
 # Development setup
 
 - **Run:** `podman-compose up` Launches the server locally. You might need to access `127.0.0.1` rather than `0.0.0.0` due to the `ALLOWED_HOSTS` setting.
