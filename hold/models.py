@@ -9,7 +9,7 @@ from django.db.models import (
     PROTECT,
 )
 from django.utils import timezone
-from django.contrib.auth.models import User
+from accounts.models import User
 from .queries import stakes_raw_queries
 from django.core.validators import MinValueValidator, MaxValueValidator
 

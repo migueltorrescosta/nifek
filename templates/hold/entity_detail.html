@@ -61,17 +61,39 @@
     <div class="row">
         <div class="col-md-8 card mb-4  mt-3 left  top">
             <div class="card-body">
-                <form class="form-inline float-right" action="{% url 'hold:entity_detail' entity.pk%}" method="get">
+                <div class="float-right">
+                    <small>
+                        <strong>Others</strong>: 
+                        {% for e in entity_list %}
+                            <a href="{% url 'hold:entity_detail' e.pk%}">{{ e.name }}</a>,
+                        {% endfor %}
+                    </small>
+                </div>
+                <!-- Example split danger button -->
+                <!-- <div class="btn-group float-right">
+                    <button type="button" class="btn btn-primary">{{ entity.name }}</button>
+                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                </div> -->
+                <!--<form class="form-inline float-right" method="get">
                     {% csrf_token %}
                     <select class="form-control" name="action" required="">
                         {% for e in entity_list %}
-                            <option value="{{ e.pk }}"> {{ e.name }}</option>
+                            <option value="{{ e.pk }}" action="{% url 'hold:entity_detail' e.pk%}" method="get">{{ e.name }}</option>
                         {% endfor %}
                     </select>
-                    <button type='submit' class="btn btn-success mx-2">Go</button>
                 </form>
-                <!--<p class=" text-muted">{{ entity.founded_on }} <-> {% if entity.dissolved_on %}{{ entity.dissolved_on }}{% else %}present{% endif %}</p>-->
-                <p class=" text-muted">{{ entity.description }}</p>
+                <p class=" text-muted">{{ entity.founded_on }} <-> {% if entity.dissolved_on %}{{ entity.dissolved_on }}{% else %}present{% endif %}</p>-->
+                <h3>{{ entity.name }}</h3>
+                <p class=" text-muted">{{ entity.description|urlize }}</p>
                 <hr>
                 <figure class="highcharts-figure">
                     <div id="container"></div>
@@ -79,12 +101,34 @@
                         <i>As this diagram is procedurally generated, the dimensions might make it hard to read. See the ownership relationships below for clearer details</i>
                     </p>
                 </figure>
-                {% for stake in stakes %}
-                <a href="{% url 'hold:entity_detail' stake.owner.id  %}">{{stake.owner.name}}</a>
-                owns {% widthratio stake.stake 1 100 %}% of 
-                <a href="{% url 'hold:entity_detail' stake.owned.id  %}">{{stake.owned.name}}</a>
-                <br>
-                {% endfor %}
+
+                <div class="row">
+                    <div class="col-sm">
+                        <strong>{{entity.name}}</strong> is owned by
+                        <ul class="list-group">
+                            {% for stake in stakes %}
+                                {% if stake.owned.id == entity.id %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <a href="{% url 'hold:entity_detail' stake.owner.id  %}">{{stake.owner.name}}</a>
+                                    <span class="badge badge-primary badge-pill">{% widthratio stake.stake 1 100 %}%</span>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                        </div>
+                    <div class="col-sm">
+                    <strong>{{entity.name}}</strong> owns
+                    <ul class="list-group">
+                        {% for stake in stakes %}
+                            {% if stake.owner.id == entity.id %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a href="{% url 'hold:entity_detail' stake.owned.id  %}">{{stake.owned.name}}</a>
+                                <span class="badge badge-primary badge-pill">{% widthratio stake.stake 1 100 %}%</span>
+                            {% endif %}
+                        {% endfor %}
+                        
+                    </ul>
+                    </div>
+                </div>
             </div>
         </div>
         {% block sidebar %} {% include 'sidebars/hold_sidebar.html' %} {% endblock sidebar %}
@@ -104,12 +148,12 @@ accessibility: {
 },
 series: [{
     animation: {
-                duration: 2000
+                duration: 700
             },
     keys: ['from', 'to', 'weight'],
     data: [
         {% for stake in stakes %}
-            ['{{ stake.owned.name}}', '{{ stake.owner.name}}', '{% widthratio stake.stake 1 1 %}'],
+            ['{{ stake.owner.name}}', '{{ stake.owned.name}}', 1],
         {% endfor %}
     ],
     type: 'sankey',

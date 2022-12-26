@@ -23,6 +23,8 @@ class EntityDetail(generic.DetailView):
         context = super(EntityDetail, self).get_context_data(**kwargs)
         relevant_stakes = object.recursive_stakes
         context["entity_list"] = Entity.objects.order_by("name")
-        context["stakes"] = Stake.objects.filter(pk__in=[s.id for s in relevant_stakes])
+        context["stakes"] = Stake.objects.filter(
+            pk__in=[s.id for s in relevant_stakes]
+        ).order_by("-stake")
         # context["messages"] = self.get("messages", [])
         return context
