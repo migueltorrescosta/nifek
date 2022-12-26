@@ -51,8 +51,7 @@
             </div>
             <small>
                 {% if user.is_authenticated %}
-                     Logged as <a href="{% url 'home' %}">{{ user }}</a>.
-                     <a href="{% url 'logout' %}">Logout</a>
+                     Logged as <a href="{% url 'accounts:profile' %}">{{ user }}</a>
                 {% else %}
                     <a type='button' class="btn btn-success" href="{% url 'magiclink:login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">Login / Signup</a>
                 {% endif %}

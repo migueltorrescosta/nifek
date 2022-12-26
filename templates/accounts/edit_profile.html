@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    #csv {
+        display: none;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 card mb-4  mt-3 left  top">
+            <div class="card-body">
+                <a class="float-right" href="{% url 'logout' %}">Logout</a>
+                <h3>Profile</h3>
+                <table class="table">
+                <tbody>
+                    <tr>
+                    <td class="text-right"><strong>Username</strong></td>
+                    <td>{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                    <td class="text-right"><strong>Email</strong></td>
+                    <td>{{ user.email }}</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+        </div>
+        {% block sidebar %} {% include 'sidebars/hold_sidebar.html' %} {% endblock sidebar %}
+    </div>
+</div>
+
+
+{% endblock content %}
