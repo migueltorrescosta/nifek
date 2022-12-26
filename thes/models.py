@@ -4,7 +4,6 @@ from django.db.models import (
     ForeignKey,
     DateTimeField,
     TextField,
-    CASCADE,
     PROTECT,
 )
 from django.contrib.auth.models import User

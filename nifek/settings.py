@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "magiclink",
     "accounts",
     "thes",
+    "hold",
 ]
 
 MIDDLEWARE = [
