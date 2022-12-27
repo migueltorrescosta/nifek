@@ -24,6 +24,7 @@ Based on https://djangocentral.com/building-a-blog-application-with-django/
   - Django: `nifek-django-dokku-app`
   - Postgres: `nifek-postgres-dokku-db`
 - Let's Encrypt used for Managing SSL Certificates
+- [Whitenoise](https://whitenoise.evans.io/en/stable/django.html): Responsible for staticfile serving, with caching and compression. Potentially look into optimizing delivery times via CloudFlare or anothe CDN provider.
 
 # Tech Stack
 
