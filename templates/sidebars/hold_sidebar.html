@@ -18,6 +18,16 @@
             </p>
         </div>
     </div>
+    <div class="card my-4">
+        <h5 class="card-header">See also</h5>
+        <div class="card-body">
+            <p class="card-text text-justify">
+                {% for e in entity_list %}
+                    <a href="{% url 'hold:entity_detail' e.pk%}">{{ e.name }}</a>,
+                {% endfor %}
+            </p>
+        </div>
+    </div>
 </div>
 
 {% endblock sidebar %}
