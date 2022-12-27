@@ -1,7 +1,5 @@
 import logging
 from django.views import generic
-from django.http import HttpResponseRedirect
-from django.contrib import messages
 
 from accounts.models import User
 
