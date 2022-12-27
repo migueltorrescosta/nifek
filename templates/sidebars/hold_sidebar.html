@@ -30,14 +30,15 @@
         </div>
     </div>
     <div class="card my-4">
-        <h5 class="card-header">Add New Entity</h5>
+        <h5 class="card-header">Add Data</h5>
         <div class="card-body">
-            <form method="post" action="{% url 'hold:home' %}">
+            <form method="post" action="{% url 'hold:entity' %}">
                 {% csrf_token %}
                 {{ create_entity_form.name|as_crispy_field }}
                 {{ create_entity_form.description|as_crispy_field }}    
                 <button type="submit" class="btn btn-success float-right my-2">Add New Entity</button>
             </form>
+            <hr>
         </div>
     </div>
 </div>

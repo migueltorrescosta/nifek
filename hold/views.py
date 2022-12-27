@@ -2,20 +2,13 @@ from django.views import generic
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 
 from .models import Entity, Stake
-from .forms import EntityForm
+from .forms import EntityForm, StakeForm
 
 
 def home(request):
-    if request.method == "GET":
-        return home_get_request(request)
-    elif request.method == "POST":
-        return home_post_request(request)
-
-
-def home_get_request(request):
     """Selects a random entity to view"""
     entity = Entity.objects.order_by("?").first()
     url = reverse("hold:entity_detail", kwargs={"pk": entity.pk})
@@ -23,44 +16,55 @@ def home_get_request(request):
     return redirect(url)
 
 
-def home_post_request(request):
-
-    # We always remain in the same page regardless of this submission success
-    return_page = HttpResponseRedirect(request.META.get("HTTP_REFERER", "/hold/"))
+def post_entity(request):
 
     if not request.user.is_authenticated:
-        messages.add_message(
-            request,
-            messages.ERROR,
-            "You cannot add an Entity without logging in",
-        )
-        return return_page
+        return _show_error_util(request, "You cannot add an Entity without logging in")
     form = EntityForm(data=request.POST)
 
     if not form.is_valid():
-        messages.add_message(
-            request,
-            messages.ERROR,
-            "The submitted Entity is invalid",
-        )
-        return return_page
+        return _show_error_util(request, "The submitted Entity is invalid")
 
     try:
-        thesis = form.save(commit=False)
-        thesis.submitted_by = request.user
-        thesis.save()
+        entity = form.save(commit=False)
+        entity.submitted_by = request.user
+        entity.save()
         messages.add_message(
             request,
             messages.SUCCESS,
-            f"Successfully submitted entity {thesis.name} by {request.user.username}",
+            f"Successfully submitted entity {entity.name} by {request.user.username}",
         )
     except:
+        return _show_error_util(request, f"Failed to create entity {entity.name}")
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER", reverse("hold:home")))
+
+
+def post_stake(request):
+
+    if not request.user.is_authenticated:
+        return _show_error_util(request, "You cannot add Stakes without logging in")
+
+    form = StakeForm(data=request.POST)
+
+    if not form.is_valid():
+        return _show_error_util(request, "The submitted Stake submission is invalid")
+
+    try:
+        stake = form.save(commit=False)
+        if stake.owner == stake.owned:
+            return _show_error_util(
+                request, f"{stake.owner} cannot be the owner and owned simultaneously."
+            )
+        stake.submitted_by = request.user
+        stake.save()
         messages.add_message(
             request,
-            messages.ERROR,
-            f"Failed to create entity {thesis.name}",
+            messages.SUCCESS,
+            f"Successfully submitted stake {stake} by {request.user.username}",
         )
-    return return_page
+    except:
+        _show_error_util(request, f"Failed to create entity {stake.name}")
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER", reverse("hold:home")))
 
 
 class EntityDetail(generic.DetailView):
@@ -75,28 +79,14 @@ class EntityDetail(generic.DetailView):
             pk__in=[s.id for s in relevant_stakes]
         ).order_by("-stake")
         context["create_entity_form"] = EntityForm()
+        context["create_stake_form"] = StakeForm()
         return context
 
-    def post(self, request):
 
-        if not request.user.is_authenticated:
-            messages.add_message(
-                request,
-                messages.ERROR,
-                "You cannot add an Entity without logging in",
-            )
-            return HttpResponseRedirect("/thes/")
-        form = EntityForm(data=request.POST)
-
-        if not form.is_valid():
-            messages.add_message(
-                request,
-                messages.ERROR,
-                "The submitted Thesis is invalid",
-            )
-            return HttpResponseRedirect("/thes/")
-
-        thesis = form.save(commit=False)
-        thesis.author = request.user
-        thesis.save()
-        return HttpResponseRedirect("/thes/")
+def _show_error_util(request, message):
+    messages.add_message(
+        request,
+        messages.ERROR,
+        message,
+    )
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER", reverse("hold:home")))

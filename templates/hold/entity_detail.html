@@ -73,6 +73,7 @@
                     </p>
                 </figure>
 
+                <hr>
                 <div class="row">
                     <div class="col-sm">
                         <strong>{{entity.name}}</strong> is owned by
@@ -96,10 +97,15 @@
                                 <span class="badge badge-primary badge-pill">{% widthratio stake.stake 1 100 %}%</span>
                             {% endif %}
                         {% endfor %}
-                        
                     </ul>
                     </div>
                 </div>
+                <hr>
+                <form method="post" action="{% url 'hold:stake' %}">
+                    {% csrf_token %}
+                    {{ create_stake_form | crispy }}
+                    <button type="submit" class="btn btn-success float-right my-2">Add New Stake</button>
+                </form>
             </div>
         </div>
         {% block sidebar %} {% include 'sidebars/hold_sidebar.html' %} {% endblock sidebar %}
