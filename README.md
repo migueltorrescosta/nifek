@@ -17,7 +17,11 @@ Based on https://djangocentral.com/building-a-blog-application-with-django/
 
 # Production setup
 
-- TBD
+- Linode Servers hosting with basic DNS
+- Domain acquired from NameCheap
+- Dokku Apps:
+  - Django: `nifek-django-dokku-app`
+  - Postgres: `nifek-postgres-dokku-db`
 
 # Tech Stack
 
