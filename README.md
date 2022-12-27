@@ -22,6 +22,7 @@ Based on https://djangocentral.com/building-a-blog-application-with-django/
 - Dokku Apps:
   - Django: `nifek-django-dokku-app`
   - Postgres: `nifek-postgres-dokku-db`
+- Let's Encrypt used for Managing SSL Certificates
 
 # Tech Stack
 
