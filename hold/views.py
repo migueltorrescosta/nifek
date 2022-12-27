@@ -65,10 +65,10 @@ def post_stake(request):
         messages.add_message(
             request,
             messages.SUCCESS,
-            f"Successfully submitted {100* stake.stake:.1f }% stake of {stake.owned} by {stake.owner}, by {request.user.username}",
+            f"Successfully submitted {100* stake.stake:.1f }% stake of {stake.owned.name} by {stake.owner.name}, by {request.user.username}",
         )
     except:
-        _show_error_util(request, f"Failed to create entity {stake.name}")
+        _show_error_util(request, f"Failed to create stake")
     return HttpResponseRedirect(request.META.get("HTTP_REFERER", reverse("hold:home")))
 
 
