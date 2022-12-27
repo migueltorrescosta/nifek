@@ -1,1 +1,1 @@
-web: gunicorn nifek.wsgi
+web: python manage.py collectstatic --noinput ; gunicorn myapp.wsgi
