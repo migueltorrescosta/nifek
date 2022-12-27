@@ -60,15 +60,20 @@ def post_stake(request):
                 request,
                 f"A stake already exists where {stake.owner} owns {stake.owned}",
             )
+        if stake.owner.id in [s.owned_id for s in stake.owned.recursive_assets]:
+            return _show_error_util(
+                request,
+                f"{stake.owned} already owns part of {stake.owner}, which would create a circular dependency. We are not smart enough to handle this yet",
+            )
         stake.submitted_by = request.user
         stake.save()
         messages.add_message(
             request,
             messages.SUCCESS,
-            f"Successfully submitted {100* stake.stake:.1f }% stake of {stake.owned.name} by {stake.owner.name}, by {request.user.username}",
+            f"Successfully submitted {100* stake.stake:.1f }% stake of {stake.owned.name} by {stake.owner.name}, by {stake.submitted_by.username}",
         )
     except:
-        _show_error_util(request, f"Failed to create stake")
+        return _show_error_util(request, f"Failed to create stake")
     return HttpResponseRedirect(request.META.get("HTTP_REFERER", reverse("hold:home")))
 
 
