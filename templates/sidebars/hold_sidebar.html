@@ -1,3 +1,4 @@
+{% load crispy_forms_tags %}
 {% block sidebar %}
 
 <style>
@@ -19,13 +20,24 @@
         </div>
     </div>
     <div class="card my-4">
-        <h5 class="card-header">See also</h5>
+        <h5 class="card-header">See Also</h5>
         <div class="card-body">
             <p class="card-text text-justify">
                 {% for e in entity_list %}
                     <a href="{% url 'hold:entity_detail' e.pk%}">{{ e.name }}</a>,
                 {% endfor %}
             </p>
+        </div>
+    </div>
+    <div class="card my-4">
+        <h5 class="card-header">Add New Entity</h5>
+        <div class="card-body">
+            <form method="post" action="{% url 'hold:home' %}">
+                {% csrf_token %}
+                {{ create_entity_form.name|as_crispy_field }}
+                {{ create_entity_form.description|as_crispy_field }}    
+                <button type="submit" class="btn btn-success float-right my-2">Add New Entity</button>
+            </form>
         </div>
     </div>
 </div>

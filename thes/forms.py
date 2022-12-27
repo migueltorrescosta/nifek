@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from thes.models import Thesis
+from .models import Thesis
 
 # Create the form class.
 class ThesisForm(ModelForm):
