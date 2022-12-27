@@ -55,12 +55,17 @@ def post_stake(request):
             return _show_error_util(
                 request, f"{stake.owner} cannot be the owner and owned simultaneously."
             )
+        if Stake.objects.filter(owner=stake.owner, owned=stake.owned).exists():
+            return _show_error_util(
+                request,
+                f"A stake already exists where {stake.owner} owns {stake.owned}",
+            )
         stake.submitted_by = request.user
         stake.save()
         messages.add_message(
             request,
             messages.SUCCESS,
-            f"Successfully submitted stake {stake} by {request.user.username}",
+            f"Successfully submitted {100* stake.stake:.1f }% stake of {stake.owned} by {stake.owner}, by {request.user.username}",
         )
     except:
         _show_error_util(request, f"Failed to create entity {stake.name}")
