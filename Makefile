@@ -1,4 +1,4 @@
 
 .PHONY: run
 run:
-	podman-compose up
+	docker-compose up
