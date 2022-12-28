@@ -42,7 +42,7 @@ Based on https://djangocentral.com/building-a-blog-application-with-django/
 - **Run Tests locally:** `docker exec` into the running django container, and run `python manage.py test`.
 - **Deploying changes:** The deployment to `dokku` and `github` is decoupled.
   - `git push` and `git push origin` send changes to GitHub only.
-  - `git push dokku` sends changes to `dokku`.
+  - `git push dokku` sends changes to `dokku` only.
   - `git push all` sends changes to both. `dokku` runs tests pre-deployment, and rejects the changes if the tests fail 😄
 
 For a multi developer experience, we might want to use `GitHub Actions` as our `CI/CD` and deploy to `Linode` as the last step:
