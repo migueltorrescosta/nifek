@@ -1,8 +1,8 @@
 {
   "scripts": {
     "dokku": {
-      "predeploy": "./manage.py test",
-      "postdeploy": "./manage.py migrate"
+      "postdeploy": "./manage.py migrate",
+      "predeploy": "./manage.py test"
     }
   }
 }

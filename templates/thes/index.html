@@ -41,7 +41,7 @@
             {% endfor %}
             <form method="post" action="{% url 'thes:home' %}">
                 {% csrf_token %}
-                {{ create_thesis_form.content|as_crispy_field }}    
+                {{ create_thesis_form.content|as_crispy_field }}
                 <button type="submit" class="btn btn-success float-right">Submit new Thesis</button>
             </form>
         </div>
@@ -69,7 +69,7 @@
             {% endfor %}
         </div>
         -->
-        {% block sidebar %} 
+        {% block sidebar %}
             {% include 'sidebars/thes_sidebar.html' %}
         {% endblock sidebar %}
     </div>

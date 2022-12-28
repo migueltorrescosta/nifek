@@ -12,7 +12,7 @@ def stakes_raw_queries(pk, key):
                     UNION ALL
                     SELECT s.id, s.owned_id, s.owner_id, s.stake
                     FROM recursive_assets AS r, hold_stake AS s
-                    WHERE r.owned_id = s.owner_id 
+                    WHERE r.owned_id = s.owner_id
                     )
                 SELECT * FROM recursive_assets
             )
@@ -25,7 +25,7 @@ def stakes_raw_queries(pk, key):
                     UNION ALL
                     SELECT s.id, s.owned_id, s.owner_id, s.stake
                     FROM recursive_shareholders AS r, hold_stake AS s
-                    WHERE r.owner_id = s.owned_id 
+                    WHERE r.owner_id = s.owned_id
                     )
                 SELECT * FROM recursive_shareholders
             )
@@ -38,7 +38,7 @@ def stakes_raw_queries(pk, key):
             UNION ALL
             SELECT s.id, s.owned_id, s.owner_id, s.stake
             FROM recursive_assets AS r, hold_stake AS s
-            WHERE r.owned_id = s.owner_id 
+            WHERE r.owned_id = s.owner_id
             )
         SELECT DISTINCT * FROM recursive_assets
     """,
@@ -50,7 +50,7 @@ def stakes_raw_queries(pk, key):
             UNION ALL
             SELECT s.id, s.owned_id, s.owner_id, s.stake
             FROM recursive_shareholders AS r, hold_stake AS s
-            WHERE r.owner_id = s.owned_id 
+            WHERE r.owner_id = s.owned_id
             )
         SELECT DISTINCT * FROM recursive_shareholders
     """,
