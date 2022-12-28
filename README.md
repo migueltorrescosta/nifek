@@ -24,7 +24,9 @@ Based on https://djangocentral.com/building-a-blog-application-with-django/
   - Django: `nifek-django-dokku-app`
   - Postgres: `nifek-postgres-dokku-db`
 - Let's Encrypt used for Managing SSL Certificates
-- [Whitenoise](https://whitenoise.evans.io/en/stable/django.html): Responsible for staticfile serving, with caching and compression. Potentially look into optimizing delivery times via CloudFlare or anothe CDN provider.
+- [Whitenoise](https://whitenoise.evans.io/en/stable/django.html): Responsible for staticfile serving, with caching and compression. Potentially look into
+  - optimizing delivery times via CloudFlare or anothe CDN provider.
+  - Removing the collectstatic from the predeploy script ( it shouldn't be needed anymore, we need to check that it doesn't destroy the admin panel css though )
 - Email: noreplynifek@gmail.com
 
 # Tech Stack
