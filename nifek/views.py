@@ -9,12 +9,12 @@ def home(request):
     apps = [
         {
             "title": "Thes",
-            "description": "A place to store thoughts / beliefs",
+            "description": "A place to store thoughts and beliefs.",
             "url": reverse("thes:home"),
         },
         {
             "title": "Hold",
-            "description": "Tracker for company ownership",
+            "description": "Tracker for company ownership.",
             "url": reverse("hold:home"),
         },
     ]
