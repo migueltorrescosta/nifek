@@ -6,7 +6,7 @@ Based on https://djangocentral.com/building-a-blog-application-with-django/
 # Todo
 
 - Code
-  - Add [testing suite](https://docs.djangoproject.com/en/4.1/topics/testing/overview/) to the pre-commit hooks.
+  - Add Load Testing to the app, probably with [Locust](https://www.section.io/engineering-education/how-to-test-django-applications-with-locust/).
 - Apps
   - Mott: Mottery App.
   - Anki: Anki Like app.
@@ -22,23 +22,11 @@ Based on https://djangocentral.com/building-a-blog-application-with-django/
 # Development setup
 
 - **Run:** `podman-compose up` Launches the server locally. You might need to access `127.0.0.1` rather than `0.0.0.0` due to the `ALLOWED_HOSTS` setting.
-
-- **Deployment process:** Since the deployment to `dokku` and `github` is decoupled, we introduce the test running at a `pre-commit` stage, so that it is done before both the deployment to `Linode` and to `GitHub`.
-
-```mermaid
-  sequenceDiagram
-    participant GitHub
-    participant Developent Machine
-    participant Linode Server
-    Developent Machine->Developent Machine: Run Tests before any git push
-    Note over Linode Server, GitHub: git push | git push origin
-    Developent Machine->>GitHub: push
-    Note over Linode Server, GitHub: git push dokku
-    Developent Machine->>Linode Server: deploy
-    Note over Linode Server, GitHub: git push all
-    Developent Machine->>GitHub: push
-    Developent Machine->>Linode Server: deploy
-```
+- **Run Tests locally:** `docker exec` into the running django container, and run `python manage.py test`.
+- **Deploying changes:** The deployment to `dokku` and `github` is decoupled.
+  - `git push` and `git push origin` send changes to GitHub only.
+  - `git push dokku` sends changes to `dokku`.
+  - `git push all` sends changes to both. `dokku` runs tests pre-deployment, and rejects the changes if the tests fail 😄
 
 For a multi developer experience, we might want to use `GitHub Actions` as our `CI/CD` and deploy to `Linode` as the last step:
 
@@ -52,7 +40,7 @@ For a multi developer experience, we might want to use `GitHub Actions` as our `
     GitHub->>Linode Server: deploy
 ```
 
-# Production setup
+# Production environment
 
 - Linode Server `139.144.68.153` hosting with basic DNS
 - Domain acquired from NameCheap
@@ -61,7 +49,7 @@ For a multi developer experience, we might want to use `GitHub Actions` as our `
   - Postgres: `nifek-postgres-dokku-db`
 - [Let's Encrypt dokku plugin](https://github.com/dokku/dokku-letsencrypt) used for Managing SSL Certificates
 - [Whitenoise](https://whitenoise.evans.io/en/stable/django.html): Responsible for staticfile serving, with caching and compression. Potentially look into
-  - optimizing delivery times via CloudFlare or anothe CDN provider.
+  - optimizing delivery times via CloudFlare or another CDN provider as the source of all StaticFiles.
   - Removing the collectstatic from the predeploy script ( it shouldn't be needed anymore, we need to check that it doesn't destroy the admin panel css though )
 - Email: noreplynifek@gmail.com . It was faster to use Google's provided email API than to setup an `SMTP Server`
 - `SEO`: Optimized via the addition of title and per page description tags.
