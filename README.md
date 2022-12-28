@@ -1,7 +1,7 @@
 # NiFeK
 
 Personal project to support all the tools I wanted to have available for myself 🪞
-Based on https://djangocentral.com/building-a-blog-application-with-django/
+Initial structure shamelessly stolen from https://djangocentral.com/building-a-blog-application-with-django/
 
 # 📝 ToDo
 
