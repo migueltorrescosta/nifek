@@ -8,6 +8,7 @@ Initial structure based on a template blog app https://djangocentral.com/buildin
 ## 💻 Code
 
 - Add Load Testing to the app, probably with [Locust](https://www.section.io/engineering-education/how-to-test-django-applications-with-locust/).
+- Add [code coverage](https://adamj.eu/tech/2019/04/30/getting-a-django-application-to-100-percent-coverage/)
 
 ## 📱 Apps
 
