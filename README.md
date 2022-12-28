@@ -44,6 +44,7 @@ _Remark: Replace `podman-docker` commands with `docker-compose` depending on whe
   - On the web container run `django manage.py createsuperuser` to be able to do the first login as staff, and have the `admin` panel locally available.
   - Emails are saved under the `sent_emails` folder for local development ( Needed for magiclinks )
 - **Run Tests locally:** `docker exec` into the running django container, and run `python manage.py test`.
+- **Pre Commit Hooks:** The current `.pre-commit-config.yaml` setup enforces `trailing-whitespace`, `detect-private-key`, `end-of-file-fixer`, `forbid-submodules`, `name-tests-test`, `pretty-format-json`, `requirements-txt-fixer`.
 - **Deploying changes:** The deployment to `dokku` and `github` is decoupled.
   - `git push` and `git push origin` send changes to GitHub only.
   - `git push dokku` sends changes to `dokku` only.
