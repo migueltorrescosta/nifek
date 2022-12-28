@@ -1,23 +1,28 @@
-# Nifek
+# NiFeK
 
-Personal project to support all the tools I wanted to have available, tailored for me :D
+Personal project to support all the tools I wanted to have available for myself 🪞
 Based on https://djangocentral.com/building-a-blog-application-with-django/
 
 # 📝 ToDo
 
-- Code
-  - Add Load Testing to the app, probably with [Locust](https://www.section.io/engineering-education/how-to-test-django-applications-with-locust/).
-- Apps
-  - Mott: Mottery App.
-  - Anki: Anki Like app.
-  - MeBa: Diagram maker to increase our Mental Bandwith.
-  - Ping: `Uptime Robot` like app.
-  - Mova: Visually compare Monetary Values.
-  - Paol: Create a Polling system that allows for multiple questions. On Visualization, allow for the viewing of Paretto Optimal only points.
-  - Pink: Promise tracker for various events. Sends out a monthly email with the status updates of all subscribers of an event.
-- `SEO` optimization
-  - Add `sitemap.xml`,
-  - Follow other [suggestions from janowski](https://www.janowski.dev/articles/seo-for-django-5-methods-to-improve-seo/)
+## Code
+
+- Add Load Testing to the app, probably with [Locust](https://www.section.io/engineering-education/how-to-test-django-applications-with-locust/).
+
+## Apps
+
+- Mott: Mottery App.
+- Anki: Anki Like app.
+- MeBa: Diagram maker to increase our Mental Bandwith.
+- Ping: `Uptime Robot` like app.
+- Mova: Visually compare Monetary Values.
+- Paol: Create a Polling system that allows for multiple questions. On Visualization, allow for the viewing of Paretto Optimal only points.
+- Pink: Promise tracker for various events. Sends out a monthly email with the status updates of all subscribers of an event.
+
+## `SEO` optimization
+
+- Add `sitemap.xml`,
+- Follow other [suggestions from janowski](https://www.janowski.dev/articles/seo-for-django-5-methods-to-improve-seo/)
 
 # 📚 Tech Stack
 
@@ -30,7 +35,10 @@ Based on https://djangocentral.com/building-a-blog-application-with-django/
 
 # 🏌 Development setup
 
-- **Run:** `podman-compose up` Launches the server locally. You might need to access `127.0.0.1` rather than `0.0.0.0` due to the `ALLOWED_HOSTS` setting.
+- **Run:** `podman-compose up` or `docker-compose up` Launches the server locally.
+  - The app should be available under `0.0.0.0:8000` due to the `ALLOWED_HOSTS` setting.
+  - On the web container run `django manage.py createsuperuser` to be able to do the first login as staff, and have the `admin` panel locally available.
+  - Emails are saved under the `sent_emails` folder for local development ( Needed for magiclinks )
 - **Run Tests locally:** `docker exec` into the running django container, and run `python manage.py test`.
 - **Deploying changes:** The deployment to `dokku` and `github` is decoupled.
   - `git push` and `git push origin` send changes to GitHub only.
