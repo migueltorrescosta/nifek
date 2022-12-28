@@ -6,14 +6,15 @@ Based on https://djangocentral.com/building-a-blog-application-with-django/
 # Todo
 
 - Code
-  - Add [testing suite](https://docs.djangoproject.com/en/4.1/topics/testing/overview/) to the pre-commit hooks
+  - Add [testing suite](https://docs.djangoproject.com/en/4.1/topics/testing/overview/) to the pre-commit hooks.
 - Apps
-  - Mott: Mottery App
-  - Anki: Anki Like app
-  - MeBa: Diagram maker to increase our Mental Bandwith
-  - Ping: `Uptime Robot` like app
-  - Mova: Visually compare Monetary Values
-  - Paol: Create a Polling system that allows for multiple questions. On Visualization, allow for the viewing of Paretto Optimal only points
+  - Mott: Mottery App.
+  - Anki: Anki Like app.
+  - MeBa: Diagram maker to increase our Mental Bandwith.
+  - Ping: `Uptime Robot` like app.
+  - Mova: Visually compare Monetary Values.
+  - Paol: Create a Polling system that allows for multiple questions. On Visualization, allow for the viewing of Paretto Optimal only points.
+  - Pink: Promise tracker for various events. Sends out a monthly email with the status updates of all subscribers of an event.
 
 # Development setup
 
