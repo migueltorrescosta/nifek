@@ -73,10 +73,7 @@ Solved by [Let's Encrypt dokku plugin](https://github.com/dokku/dokku-letsencryp
 
 ## 📤 Static File Serving
 
-Solved by [Whitenoise](https://whitenoise.evans.io/en/stable/django.html), which provides caching and compression out of the box. This can potentially be improved via:
-
-- optimizing delivery times via CloudFlare or another CDN provider as the source of all StaticFiles.
-- Removing the collectstatic from the predeploy script ( it shouldn't be needed anymore, we need to check that it doesn't destroy the admin panel css though )
+Solved by [Whitenoise](https://whitenoise.evans.io/en/stable/django.html), which provides caching and compression out of the box. Loading times can be decreased by setting up CloudFlare or another CDN provider as the source of all StaticFiles.
 
 ## 📩 Email setup
 
