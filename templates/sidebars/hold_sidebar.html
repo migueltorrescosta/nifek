@@ -23,9 +23,11 @@
         <h5 class="card-header">See Also</h5>
         <div class="card-body">
             <p class="card-text text-justify">
-                {% for e in entity_list %}
-                    <a href="{% url 'hold:entity_detail' e.pk%}">{{ e.name }}</a>,
-                {% endfor %}
+                <small>
+                    {% for e in entity_list %}
+                        <a href="{% url 'hold:entity_detail' e.pk%}">{{ e.name }}</a>,
+                    {% endfor %}
+                </small>
             </p>
         </div>
     </div>
