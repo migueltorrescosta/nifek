@@ -32,6 +32,7 @@ Based on https://djangocentral.com/building-a-blog-application-with-django/
   - optimizing delivery times via CloudFlare or anothe CDN provider.
   - Removing the collectstatic from the predeploy script ( it shouldn't be needed anymore, we need to check that it doesn't destroy the admin panel css though )
 - Email: noreplynifek@gmail.com
+- SEO: Optimized via the addition of title and per page description tags. TODO: Add `sitemap.xml`
 
 # Tech Stack
 
