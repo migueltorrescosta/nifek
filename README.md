@@ -26,12 +26,13 @@ Initial structure shamelessly stolen from https://djangocentral.com/building-a-b
 
 # 📚 Tech Stack
 
-- Django: https://www.djangoproject.com/
-- Magic Links: https://github.com/pyepye/django-magiclink
-- Messages / Notifications: https://docs.djangoproject.com/en/4.1/ref/contrib/messages/
-- Form rendering: https://django-crispy-forms.readthedocs.io/en/latest/
-- Bootstrap: https://getbootstrap.com/docs/4.0/getting-started/introduction/
-- Postgres: https://www.postgresql.org/about/
+- [Django](https://www.djangoproject.com/) as the core Framework.
+- [Magic Links](https://github.com/pyepye/django-magiclink) to provide passwordless Authentication with email based Magic Links.
+- [Messages / Notifications](https://docs.djangoproject.com/en/4.1/ref/contrib/messages/) For displaying relevant messages from the backend to the user.
+- [django-crispy-forms](https://django-crispy-forms.readthedocs.io/en/latest/) for Backend provided form rendering.
+- [Bootstrap](https://getbootstrap.com/docs/4.0/getting-started/introduction/) for UI/UX.
+- [Postgres](https://www.postgresql.org/about/) as a relational solution for our DB.
+- [Dependabot](https://github.blog/2020-06-01-keep-all-your-packages-up-to-date-with-dependabot/) to avoid outdated/insecure dependencies.
 
 # 🏌 Development setup
 
