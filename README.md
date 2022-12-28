@@ -36,8 +36,11 @@ Initial structure shamelessly stolen from https://djangocentral.com/building-a-b
 
 # 🏌 Development setup
 
-- **Run:** `podman-compose up` or `docker-compose up` Launches the server locally.
-  - The app should be available under `0.0.0.0:8000` due to the `ALLOWED_HOSTS` setting.
+_Remark: Replace `podman-docker` commands with `docker-compose` depending on whether you use `podman` or `docker` as your `container` management solution._
+
+- **Build:** `podman-compose build` to build the `web` and `db` apps ( Django and Postgres respectively ).
+- **Run:** `podman-compose up` launches the server locally.
+  - The app should be available under `0.0.0.0:8000`. `127.0.0.1` does not work due to the chosen `ALLOWED_HOSTS` setting.
   - On the web container run `django manage.py createsuperuser` to be able to do the first login as staff, and have the `admin` panel locally available.
   - Emails are saved under the `sent_emails` folder for local development ( Needed for magiclinks )
 - **Run Tests locally:** `docker exec` into the running django container, and run `python manage.py test`.
