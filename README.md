@@ -57,6 +57,7 @@ For a multi developer experience, we might want to use `GitHub Actions` as our `
     participant Development Machine
     participant GitHub
     participant Linode Server
+    Development Machine ->> Development Machine: pre-commit run
     Note over Development Machine, Linode Server: git push
     Development Machine->>GitHub: push & run tests
     GitHub->>Linode Server: deploy
