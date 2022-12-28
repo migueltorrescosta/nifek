@@ -3,3 +3,9 @@ repos:
     rev: v4.4.0
     hooks:
     -   id: trailing-whitespace
+    -   id: detect-private-key
+    -   id: end-of-file-fixer
+    -   id: forbid-submodules
+    -   id: name-tests-test
+    -   id: pretty-format-json
+    -   id: requirements-txt-fixer
