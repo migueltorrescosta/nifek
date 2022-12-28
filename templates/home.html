@@ -25,10 +25,9 @@
             {% for app in apps %}
                 <div class="card mb-4">
                     <div class="card-body">
-                        <p class="card-text">
+                        <a href="{{ app.url }}" class="card-text">
                             {{ app.title }}
-                            <a href="{{ app.url }}" class="btn btn-primary float-right">More</a>
-                        </p>
+                        </a>
                         <p class="card-text aligned-left small">
                             {{ app.description }}
                         </p>
