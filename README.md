@@ -1,6 +1,6 @@
-# NiFeK
+# [NiFeK](https://nifek.com)
 
-Personal project to support all the tools I wanted to have available for myself 🪞
+[Personal project](https://nifek.com) to support all the tools I wanted to have available for myself 🪞
 Initial structure shamelessly stolen from https://djangocentral.com/building-a-blog-application-with-django/
 
 # 📝 ToDo
