@@ -6,7 +6,9 @@ from django.urls import reverse
 
 class ThesTestCase(TestCase):
     def setUp(self):
-        user = User.objects.create(email="test_user@nifek.com", username="test_user")
+        user = User.objects.create(
+            email="test_user@nifek.com", username="test_user_for_thes_app"
+        )
         create_thesis = lambda content: Thesis.objects.create(
             author=user, content=content
         )

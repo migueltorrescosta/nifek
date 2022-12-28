@@ -3,7 +3,7 @@
 Personal project to support all the tools I wanted to have available, tailored for me :D
 Based on https://djangocentral.com/building-a-blog-application-with-django/
 
-# Todo
+# 📝 ToDo
 
 - Code
   - Add Load Testing to the app, probably with [Locust](https://www.section.io/engineering-education/how-to-test-django-applications-with-locust/).
@@ -19,7 +19,16 @@ Based on https://djangocentral.com/building-a-blog-application-with-django/
   - Add `sitemap.xml`,
   - Follow other [suggestions from janowski](https://www.janowski.dev/articles/seo-for-django-5-methods-to-improve-seo/)
 
-# Development setup
+# 📚 Tech Stack
+
+- Django: https://www.djangoproject.com/
+- Magic Links: https://github.com/pyepye/django-magiclink
+- Messages / Notifications: https://docs.djangoproject.com/en/4.1/ref/contrib/messages/
+- Form rendering: https://django-crispy-forms.readthedocs.io/en/latest/
+- Bootstrap: https://getbootstrap.com/docs/4.0/getting-started/introduction/
+- Postgres: https://www.postgresql.org/about/
+
+# 🏌 Development setup
 
 - **Run:** `podman-compose up` Launches the server locally. You might need to access `127.0.0.1` rather than `0.0.0.0` due to the `ALLOWED_HOSTS` setting.
 - **Run Tests locally:** `docker exec` into the running django container, and run `python manage.py test`.
@@ -40,7 +49,7 @@ For a multi developer experience, we might want to use `GitHub Actions` as our `
     GitHub->>Linode Server: deploy
 ```
 
-# Production environment
+# 🤵 Production environment
 
 - Linode Server `139.144.68.153` hosting with basic DNS
 - Domain acquired from NameCheap
@@ -52,20 +61,12 @@ For a multi developer experience, we might want to use `GitHub Actions` as our `
   - optimizing delivery times via CloudFlare or another CDN provider as the source of all StaticFiles.
   - Removing the collectstatic from the predeploy script ( it shouldn't be needed anymore, we need to check that it doesn't destroy the admin panel css though )
 - Email: noreplynifek@gmail.com . It was faster to use Google's provided email API than to setup an `SMTP Server`
-- `SEO`: Optimized via the addition of title and per page description tags.
+- **SEO:** Optimized via the addition of title and per page description tags.
+- **Parallelization:** Useless at the moment as we're using a single CPU. Note that we can still benefit from concurrency: Long running threads should not block slower ones.
 
-# Tech Stack
+# 🪄 Data Flows
 
-- Django: https://www.djangoproject.com/
-- Magic Links: https://github.com/pyepye/django-magiclink
-- Messages / Notifications: https://docs.djangoproject.com/en/4.1/ref/contrib/messages/
-- Form rendering: https://django-crispy-forms.readthedocs.io/en/latest/
-- Bootstrap: https://getbootstrap.com/docs/4.0/getting-started/introduction/
-- Postgres: https://www.postgresql.org/about/
-
-# Data Flows
-
-## Auth
+## Auth via MagicLinks
 
 ```mermaid
   sequenceDiagram
