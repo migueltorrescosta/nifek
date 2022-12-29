@@ -53,13 +53,13 @@ jobs:
       env:
         DEBUG: "0"
         DJANGO_SECRET_KEY: ${{ env.DJANGO_SECRET_KEY }}
-        DB_USERNAME: ${{ env.POSTGRES_USER }}
-        DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-        DB_HOST: ${{ env.POSTGRES_HOST }}
-        DB_DATABASE: ${{ env.POSTGRES_DB }}
-        DB_PORT: ${{ env.POSTGRES_PORT }}
+        POSTGRES_USER: ${{ env.MY_POSTGRES_USER }}
+        POSTGRES_PASSWORD: ${{ env.MY_POSTGRES_PASSWORD }}
+        POSTGRES_DB: ${{ env.MY_POSTGRES_DB }}
+        POSTGRES_HOST: ${{ env.MY_POSTGRES_HOST }}
+        POSTGRES_PORT: ${{ env.MY_POSTGRES_PORT }}
       run: |
-        python manage.py test
+        make coverage
     - uses: actions/upload-artifact@v2
       with:
         name: Upload Coverage Artifact
