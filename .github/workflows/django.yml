@@ -16,7 +16,7 @@ jobs:
         python-version: [3.11]
 
     env:
-      MY_POSTGRES_USER: postgres
+      MY_POSTGRES_NAME: postgres
       MY_POSTGRES_USER: postgres
       MY_POSTGRES_PASSWORD: postgres
       MY_POSTGRES_DB: nifek
