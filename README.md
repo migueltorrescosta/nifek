@@ -46,17 +46,31 @@ Initial structure based on a template blog app https://djangocentral.com/buildin
 
 _Remark: Replace `podman-docker` commands with `docker-compose` depending on whether you use `podman` or `docker` as your `container` management solution._
 
-- **Build:** `podman-compose build` to build the `web` and `db` apps ( Django and Postgres respectively ).
-- **Run:** `podman-compose up` launches the server locally.
-  - The app should be available under `0.0.0.0:8000`. `127.0.0.1` does not work due to the chosen `ALLOWED_HOSTS` setting.
-  - On the web container run `django manage.py createsuperuser` to be able to do the first login as staff, and have the `admin` panel locally available.
-  - Emails are saved under the `sent_emails` folder for local development ( Needed for magiclinks )
-- **Run Tests locally:** `docker exec` into the running django container, and run `python manage.py test`.
-- **Pre Commit Hooks:** The current `.pre-commit-config.yaml` setup enforces `trailing-whitespace`, `detect-private-key`, `end-of-file-fixer`, `forbid-submodules`, `name-tests-test`, `pretty-format-json`, `requirements-txt-fixer`, `check-added-large-files`, `check-docstring-first` `check-json`, `check-merge-conflict`.
-- **Deploying changes:** The deployment to `dokku` and `github` is decoupled.
-  - `git push` and `git push origin` send changes to GitHub only.
-  - `git push dokku` sends changes to `dokku` only.
-  - `git push all` sends changes to both. `dokku` runs tests pre-deployment, and rejects the changes if the tests fail 🦺
+## Build
+
+`podman-compose build` to build the `web` and `db` apps ( Django and Postgres respectively ).
+
+# Run
+
+`podman-compose up` launches the server locally. The app should be available under `0.0.0.0:8000`. `127.0.0.1` does not work due to the chosen `ALLOWED_HOSTS` setting. On the web container run `django manage.py createsuperuser` to be able to do the first login as staff, and have the `admin` panel locally available. Emails are saved under the `sent_emails` folder for local development ( Needed for magiclinks )
+
+## Tests
+
+To run tests locally, `docker exec` into the running django container, and run `python manage.py test`. TO also get coverage, run `make coverage` inside the container. This will generate an `htmlcov` folder which you can see in firefox. Due to containerization, you might need to change the `htmlcov` folder permissions via `sudo chown -R <username>` and `sudo chgrp -R <username>` before opening the `html` files with your browser.
+
+On the server, `dokku` takes care of running tests before deploying any image.
+
+## Pre Commit Hooks
+
+The current `.pre-commit-config.yaml` setup enforces `trailing-whitespace`, `detect-private-key`, `end-of-file-fixer`, `forbid-submodules`, `name-tests-test`, `pretty-format-json`, `requirements-txt-fixer`, `check-added-large-files`, `check-docstring-first` `check-json`, `check-merge-conflict`.
+
+## Deploying changes
+
+The deployment to `dokku` and `github` is decoupled.
+
+- `git push` and `git push origin` send changes to GitHub only.
+- `git push dokku` sends changes to `dokku` only.
+- `git push all` sends changes to both. `dokku` runs tests pre-deployment, and rejects the changes if the tests fail 🦺
 
 For a multi developer experience, we might want to use `GitHub Actions` as our `CI/CD` and deploy to `Linode` as the last step:
 
