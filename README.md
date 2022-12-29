@@ -19,6 +19,7 @@ Initial structure based on a template blog app https://djangocentral.com/buildin
 - **Mony:** Visually compare Monetary Values.
 - **Paol:** Create a Polling system that allows for multiple questions. On Visualization, allow for the viewing of Paretto Optimal only points.
 - **Pink:** Promise tracker for various events. Sends out a monthly email with the status updates of all subscribers of an event.
+- **Meas:** Implementation of the framework described on `How To Measure Anything`
 
 ## 📐 `SEO` optimization
 
