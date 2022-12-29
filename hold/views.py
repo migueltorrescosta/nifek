@@ -70,7 +70,7 @@ def post_stake(request):
         messages.add_message(
             request,
             messages.SUCCESS,
-            f"Successfully submitted {100* stake.stake:.1f }% stake of {stake.owned.name} by {stake.owner.name}, by {stake.submitted_by.username}",
+            f"Successfully submitted {100* stake.stake:.1f}% stake of {stake.owned.name} by {stake.owner.name}, by {stake.submitted_by.username}",
         )
     except:
         return _show_error_util(request, f"Failed to create stake")
