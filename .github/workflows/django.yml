@@ -27,12 +27,9 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_NAME: ${{ env.MY_POSTGRES_NAME }}
           POSTGRES_USER: ${{ env.MY_POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ env.MY_POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ env.MY_POSTGRES_DB }}
-          POSTGRES_HOST: ${{ env.MY_POSTGRES_HOST }}
-          POSTGRES_PORT: ${{ env.MY_POSTGRES_PORT }}
         ports:
           - 5432:5432
         options: >-
@@ -59,7 +56,6 @@ jobs:
         POSTGRES_NAME: ${{ env.MY_POSTGRES_NAME }}
         POSTGRES_USER: ${{ env.MY_POSTGRES_USER }}
         POSTGRES_PASSWORD: ${{ env.MY_POSTGRES_PASSWORD }}
-        POSTGRES_DB: ${{ env.MY_POSTGRES_DB }}
         POSTGRES_HOST: ${{ env.MY_POSTGRES_HOST }}
         POSTGRES_PORT: ${{ env.MY_POSTGRES_PORT }}
         EMAIL_BACKEND: django.core.mail.backends.filebased.EmailBackend
