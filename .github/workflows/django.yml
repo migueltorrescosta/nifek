@@ -19,7 +19,7 @@ jobs:
       MY_POSTGRES_NAME: github_actions
       MY_POSTGRES_USER: postgres
       MY_POSTGRES_PASSWORD: postgres
-      MY_POSTGRES_DB: nifek
+      MY_POSTGRES_DB: github_actions
       MY_POSTGRES_HOST: '127.0.0.1'
       MY_POSTGRES_PORT: 5432
       DJANGO_SECRET_KEY: test_key
@@ -59,6 +59,7 @@ jobs:
         POSTGRES_NAME: ${{ env.MY_POSTGRES_NAME }}
         POSTGRES_USER: ${{ env.MY_POSTGRES_USER }}
         POSTGRES_PASSWORD: ${{ env.MY_POSTGRES_PASSWORD }}
+        POSTGRES_DB: ${{ env.MY_POSTGRES_DB }}
         POSTGRES_HOST: ${{ env.MY_POSTGRES_HOST }}
         POSTGRES_PORT: ${{ env.MY_POSTGRES_PORT }}
         EMAIL_BACKEND: django.core.mail.backends.filebased.EmailBackend
