@@ -12,7 +12,6 @@ Initial structure based on a template blog app https://djangocentral.com/buildin
 
 ## 📱 New Apps
 
-- **Core work:** Add user Profile Page!
 - **Mott:** Mottery App.
 - **Anki:** Anki Like app.
 - **Diam:** Diagram maker to increase our Mental Bandwith.
@@ -24,6 +23,7 @@ Initial structure based on a template blog app https://djangocentral.com/buildin
 
 ## ☎ Old Apps
 
+- **Core:** Add user Profile Page!
 - **Thes:** Allow users to tag/untag existing Thesis
 
 ## 📐 `SEO` optimization
