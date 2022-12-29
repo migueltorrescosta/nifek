@@ -22,18 +22,20 @@
     <div class="row">
         <div class="col-md-8 mt-3 left">
             <p class="card-text">Experimental stop for small apps</p>
-            {% for app in apps %}
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <a href="{{ app.url }}" class="card-text">
-                            {{ app.title }}
-                        </a>
-                        <p class="card-text aligned-left small">
-                            {{ app.description }}
-                        </p>
+            <div class="row">
+                {% for app in apps %}
+                    <div class="card mb-1 mx-1 col-md-5">
+                        <div class="card-body">
+                            <a href="{{ app.url }}" class="card-text">
+                                {{ app.title }}
+                            </a>
+                            <p class="card-text aligned-left small">
+                                {{ app.description }}
+                            </p>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
         {% block sidebar %} {% include 'sidebars/base_sidebar.html' %} {% endblock sidebar %}
     </div>
