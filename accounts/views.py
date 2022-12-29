@@ -11,6 +11,4 @@ class EditProfile(generic.DetailView):
     template_name = "accounts/edit_profile.html"
 
     def get_object(self, queryset=None):
-        print(self.request.user)
-        print(User.objects.get(pk=self.request.user.pk))
         return User.objects.get(pk=self.request.user.pk)
