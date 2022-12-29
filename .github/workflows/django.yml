@@ -16,10 +16,11 @@ jobs:
         python-version: [3.11]
 
     env:
-      MY_POSTGRES_USER: test_user
-      MY_POSTGRES_PASSWORD: test_password
-      MY_POSTGRES_DB: test_password
-      MY_POSTGRES_HOST: test_db
+      MY_POSTGRES_USER: postgres
+      MY_POSTGRES_USER: postgres
+      MY_POSTGRES_PASSWORD: postgres
+      MY_POSTGRES_DB: nifek
+      MY_POSTGRES_HOST: db
       MY_POSTGRES_PORT: 5432
       DJANGO_SECRET_KEY: test_key
     services:
