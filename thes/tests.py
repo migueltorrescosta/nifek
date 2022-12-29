@@ -6,11 +6,11 @@ from django.urls import reverse
 
 class ThesTestCase(TestCase):
     def setUp(self):
-        user = User.objects.create(
+        self.user = User.objects.create(
             email="test_user@nifek.com", username="test_user_for_thes_app"
         )
         create_thesis = lambda content: Thesis.objects.create(
-            author=user, content=content
+            author=self.user, content=content
         )
         self.permanent_thesis = create_thesis("Test Permanent Thesis")
         self.to_delete_thesis = create_thesis("Test To Delete Thesis")
@@ -26,6 +26,21 @@ class ThesTestCase(TestCase):
         )
         response = self.client.get(relative_url)
         self.assertEqual(response.status_code, 200)
+
+    def test_http_create_thesis(self):
+        relative_url = reverse("thes:home")
+        data = {
+            "content": "Thesis created during tests",
+        }
+        self.client.force_login(user=self.user)
+        response = self.client.post(relative_url, follow=True, data=data)
+        self.assertEqual(
+            response.status_code, 200, "The post request failed for the thesis creation"
+        )
+        self.assertTrue(
+            Thesis.objects.filter(content=data["content"]).exists(),
+            "The post request was successful but no thesis was created in the DB",
+        )
 
     def test_http_get_non_existing_thesis(self):
         relative_url = reverse("thes:thesis_detail", kwargs={"pk": 10**9 + 321})
