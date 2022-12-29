@@ -5,10 +5,11 @@ Initial structure based on a template blog app https://djangocentral.com/buildin
 
 # 📝 ToDo
 
-## 💻 Code
+## 💻 Project Quality
 
 - Add Load Testing to the app, probably with [Locust](https://www.section.io/engineering-education/how-to-test-django-applications-with-locust/).
-- Add [code coverage](https://adamj.eu/tech/2019/04/30/getting-a-django-application-to-100-percent-coverage/)
+- Add [code coverage](https://adamj.eu/tech/2019/04/30/getting-a-django-application-to-100-percent-coverage/) as a GitHub Actions Artifact. [This approach](https://www.hacksoft.io/blog/github-actions-in-action-setting-up-django-and-postgres) seems promising. FOr the time we can manually run coverage, which lies at 93% 🥳
+- For SEO Optimization add a `sitemap.xml` and follow the [suggestions from janowski](https://www.janowski.dev/articles/seo-for-django-5-methods-to-improve-seo/).
 
 ## 📱 New Apps
 
@@ -25,11 +26,6 @@ Initial structure based on a template blog app https://djangocentral.com/buildin
 
 - **Core:** Add user Profile Page!
 - **Thes:** Allow users to tag/untag existing Thesis
-
-## 📐 `SEO` optimization
-
-- Add `sitemap.xml`,
-- Follow [suggestions from janowski](https://www.janowski.dev/articles/seo-for-django-5-methods-to-improve-seo/)
 
 # 📚 Tech Stack
 
