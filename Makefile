@@ -5,4 +5,4 @@ run:
 
 .PHONY: coverage
 coverage:
-	pip install coverage && coverage erase && coverage run manage.py test && coverage report
+	pip install coverage && coverage erase && coverage run manage.py test && coverage report && coverage html
