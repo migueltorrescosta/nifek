@@ -31,7 +31,7 @@
                         {{ thesis.author }}  |  {{ thesis.created_on}}
                         <div class="btn-group btn-group-sm mr-2 float-right" role="group" aria-label="First group">
                             {% for tag in thesis.tags.all %}
-                                <button type="button" class="btn btn-secondary">{{ tag.property.text }}</button>
+                                <button type="button" class="btn btn-secondary">{{ tag.property.text|urlize }}</button>
                             {% endfor %}
                         </div>
                     </p>
