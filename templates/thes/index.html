@@ -26,7 +26,7 @@
         <div class="list-group col-md-8 mt-3 left" id="myList" role="tablist">
             {% for thesis in thesis_list %}
                 <!-- <a class="list-group-item list-group-item-action" data-toggle="list" href="{% url 'thes:thesis_detail' thesis.pk  %}" role="tab"> -->
-                <a class="list-group-item list-group-item-action" data-toggle="list" role="tab">
+                <div class="list-group-item list-group-item-action" data-toggle="list" role="tab">
                     <p class="aligned-left small mb-0 text-secondary">
                         {{ thesis.author }}  |  {{ thesis.created_on}}
                         <div class="btn-group btn-group-sm mr-2 float-right" role="group" aria-label="First group">
@@ -37,7 +37,7 @@
                     </p>
                     <small>{{ thesis.content|urlize }}</small>
                     <br>
-                </a>
+                </div>
             {% endfor %}
             <form method="post" action="{% url 'thes:home' %}">
                 {% csrf_token %}
