@@ -10,7 +10,7 @@ Initial structure based on a template blog app https://djangocentral.com/buildin
 - Add Load Testing to the app, probably with [Locust](https://www.section.io/engineering-education/how-to-test-django-applications-with-locust/).
 - Add [code coverage](https://adamj.eu/tech/2019/04/30/getting-a-django-application-to-100-percent-coverage/)
 
-## 📱 Apps
+## 📱 New Apps
 
 - **Core work:** Add user Profile Page!
 - **Mott:** Mottery App.
@@ -21,6 +21,10 @@ Initial structure based on a template blog app https://djangocentral.com/buildin
 - **Paol:** Create a Polling system that allows for multiple questions. On Visualization, allow for the viewing of Paretto Optimal only points.
 - **Pink:** Promise tracker for various events. Sends out a monthly email with the status updates of all subscribers of an event.
 - **Meas:** Implementation of the framework described on `How To Measure Anything`
+
+## ☎ Old Apps
+
+- **Thes:** Allow users to tag/untag existing Thesis
 
 ## 📐 `SEO` optimization
 
