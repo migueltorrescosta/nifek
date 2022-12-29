@@ -32,7 +32,7 @@ jobs:
           POSTGRES_HOST: ${{ env.MY_POSTGRES_HOST }}
           POSTGRES_PORT: ${{ env.MY_POSTGRES_PORT }}
         ports:
-          - ${{ env.MY_POSTGRES_PORT }}:${{ env.MY_POSTGRES_PORT }}
+          - 5432:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
