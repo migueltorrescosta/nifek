@@ -12,7 +12,7 @@
     <div class="card my-4">
         <h5 class="card-header">Hold</h5>
         <div class="card-body">
-            <p class="card-text text-justify">
+            <p class="card-text text-left">
                 This app keeps track of company ownership chains.
                 <br>
                 Which company should we track?
@@ -22,7 +22,7 @@
     <div class="card my-4">
         <h5 class="card-header">See Also</h5>
         <div class="card-body">
-            <p class="card-text text-justify">
+            <p class="card-text text-left">
                 <small>
                     {% for e in entity_list %}
                         <a href="{% url 'hold:entity_detail' e.pk%}">{{ e.name }}</a>,
