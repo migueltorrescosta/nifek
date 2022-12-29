@@ -6,11 +6,11 @@ from django.urls import reverse
 
 class HoldTestCase(TestCase):
     def setUp(self):
-        user = User.objects.create(
+        self.user = User.objects.create(
             email="test_user@nifek.com", username="test_user_for_hold_app"
         )
         create_entity = lambda name, description: Entity.objects.create(
-            submitted_by=user, name=name, description=description
+            submitted_by=self.user, name=name, description=description
         )
         self.permanent_entity = create_entity("Test Entity A", "Description A")
         self.permanent_entity_child = create_entity("Test Entity A1", "Description A1")
@@ -18,13 +18,13 @@ class HoldTestCase(TestCase):
             "Test Entity A2", "Description A2"
         )
         self.permanent_stake = Stake.objects.create(
-            submitted_by=user,
+            submitted_by=self.user,
             owner=self.permanent_entity,
             owned=self.permanent_entity_child,
             stake=0.5,
         )
         self.permanent_stake_child = Stake.objects.create(
-            submitted_by=user,
+            submitted_by=self.user,
             owner=self.permanent_entity_child,
             owned=self.permanent_entity_grandchild,
             stake=0.5,
@@ -42,6 +42,41 @@ class HoldTestCase(TestCase):
         )
         response = self.client.get(relative_url)
         self.assertEqual(response.status_code, 200)
+
+    def test_http_create_entity(self):
+        relative_url = reverse("hold:entity")
+        data = {
+            "name": "Entity Created During Tests",
+            "description": "mocked description",
+        }
+        self.client.force_login(user=self.user)
+        response = self.client.post(relative_url, follow=True, data=data)
+        self.assertEqual(
+            response.status_code, 200, "The post request failed for the entity creation"
+        )
+        self.assertTrue(
+            Entity.objects.filter(name=data["name"]).exists(),
+            "The post request was successful but no entity was created in the DB",
+        )
+
+    def test_http_create_stake(self):
+        relative_url = reverse("hold:stake")
+        data = {
+            "owner": self.permanent_entity.pk,
+            "owned": self.permanent_entity_grandchild.pk,
+            "stake": 0.1,
+        }
+        self.client.force_login(user=self.user)
+        response = self.client.post(relative_url, follow=True, data=data)
+        self.assertEqual(
+            response.status_code, 200, "The post request failed for the entity creation"
+        )
+        self.assertTrue(
+            Stake.objects.filter(
+                owner__pk=data["owner"], owned__pk=data["owned"]
+            ).exists(),
+            "The post request was successful but no entity was created in the DB",
+        )
 
     def test_http_get_non_existing_entity(self):
         relative_url = reverse("hold:entity_detail", kwargs={"pk": 10**9 + 321})
