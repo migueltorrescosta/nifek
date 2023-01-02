@@ -27,15 +27,15 @@
             {% for thesis in thesis_list %}
                 <!-- <a class="list-group-item list-group-item-action" data-toggle="list" href="{% url 'thes:thesis_detail' thesis.pk  %}" role="tab"> -->
                 <div class="list-group-item list-group-item-action" data-toggle="list" role="tab">
-                    <p class="aligned-left small mb-0 text-secondary">
+                    <p class="aligned-left small my-0 text-secondary">
                         {{ thesis.author }}  |  {{ thesis.created_on}}
-                        <div class="btn-group btn-group-sm mr-2 float-right" role="group" aria-label="First group">
-                            {% for tag in thesis.tags.all %}
-                                <button type="button" class="btn btn-secondary">{{ tag.property.text }}</button>
-                            {% endfor %}
-                        </div>
                     </p>
                     <small>{{ thesis.content|urlize }}</small>
+                    <div class="btn-group btn-group-sm mr-2 float-right" role="group" aria-label="First group">
+                        {% for tag in thesis.tags.all %}
+                            <button type="button" class="btn btn-secondary">{{ tag.property.text }}</button>
+                        {% endfor %}
+                    </div>
                     <br>
                 </div>
             {% endfor %}
