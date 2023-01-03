@@ -27,31 +27,32 @@
             {% for thesis in thesis_list %}
                 <!-- <a class="list-group-item list-group-item-action" data-toggle="list" href="{% url 'thes:thesis_detail' thesis.pk  %}" role="tab"> -->
                 <div class="list-group-item list-group-item-action" data-toggle="list" role="tab">
+                    <div class="float-right">
+                        <form action="{% url 'thes:tag_thesis' thesis.pk %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-control-sm">
+                                <input type="text" name="property" id="property" value="New Tag" />
+                            </div>
+                        </form>
+                    </div>
                     <p class="aligned-left small my-0 text-secondary">
                         {{ thesis.author }}  |  {{ thesis.created_on}}
                     </p>
                     <small>{{ thesis.content|urlize }}</small>
-                    <small>
-                        <div class="btn-group btn-group-sm mr-2 float-right" role="group" aria-label="First group">
+                    <br>
+                    <p class="aligned-left small my-0 text-secondary">
                             {% for tag in tag_counts %}
                                 {% if tag.thesis == thesis.pk %}
-                                    <button type="button" class="my-1 mx-1 rounded btn btn-primary">
+                                <strong>{{ tag.property__text }}</strong> ( {{ tag.count }} ),
+                                    <!-- <button type="button" class="my-1 mx-1 rounded btn btn-primary">
                                         {% csrf_token %}
                                         <input type="hidden" name="property" value="{{ tag.property__text }}">
                                         <strong>{{ tag.count }}</strong> |
                                         {{ tag.property__text }}
-                                    </button>
-                                    <!-- <button type="button" class="btn btn-secondary">{{ tag.count }}: {{ tag.property__text }}</button> -->
+                                    </button> -->
                                 {% endif %}
                             {% endfor %}
-                            <form action="{% url 'thes:tag_thesis' thesis.pk %}" method="post">
-                                {% csrf_token %}
-                                <div class="form-control-sm">
-                                    <input type="text" name="property" id="property" value="New Tag" />
-                                </div>
-                            </form>
-                        </div>
-                    </small>
+                    </p>
                 </div>
             {% endfor %}
             <form class="mt-4" method="post" action="{% url 'thes:home' %}">
