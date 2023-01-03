@@ -36,14 +36,10 @@
                         </form>
                     </div>
                     <p class="aligned-left small my-0 text-secondary">
-                        {{ thesis.author }}  |  {{ thesis.created_on}}
-                    </p>
-                    <small>{{ thesis.content|urlize }}</small>
-                    <br>
-                    <p class="aligned-left small my-0 text-secondary">
+                        <i>
                             {% for tag in tag_counts %}
                                 {% if tag.thesis == thesis.pk %}
-                                <strong>{{ tag.property__text }}</strong> ( {{ tag.count }} ),
+                                {{ tag.property__text }} ( {{ tag.count }} ),
                                     <!-- <button type="button" class="my-1 mx-1 rounded btn btn-primary">
                                         {% csrf_token %}
                                         <input type="hidden" name="property" value="{{ tag.property__text }}">
@@ -52,7 +48,9 @@
                                     </button> -->
                                 {% endif %}
                             {% endfor %}
+                        </i>
                     </p>
+                    <small>{{ thesis.content|urlize }} ∮∮∮ {{ thesis.created_on|date:'l, m E Y'}}</small>
                 </div>
             {% endfor %}
             <form class="mt-4" method="post" action="{% url 'thes:home' %}">
