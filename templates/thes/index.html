@@ -50,7 +50,7 @@
                             {% endfor %}
                         </i>
                     </p>
-                    <small>{{ thesis.content|urlize }} ∮∮∮ {{ thesis.created_on|date:'l, m E Y'}}</small>
+                    <small>{{ thesis.content|urlize }} 🗓{{ thesis.created_on|date:'l, m E Y'}}</small>
                 </div>
             {% endfor %}
             <form class="mt-4" method="post" action="{% url 'thes:home' %}">
