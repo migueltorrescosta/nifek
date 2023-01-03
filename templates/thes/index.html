@@ -31,12 +31,27 @@
                         {{ thesis.author }}  |  {{ thesis.created_on}}
                     </p>
                     <small>{{ thesis.content|urlize }}</small>
-                    <div class="btn-group btn-group-sm mr-2 float-right" role="group" aria-label="First group">
-                        {% for tag in thesis.tags.all %}
-                            <button type="button" class="btn btn-secondary">{{ tag.property.text }}</button>
-                        {% endfor %}
-                    </div>
-                    <br>
+                    <small>
+                        <div class="btn-group btn-group-sm mr-2 float-right" role="group" aria-label="First group">
+                            {% for tag in tag_counts %}
+                                {% if tag.thesis == thesis.pk %}
+                                    <button type="button" class="my-1 mx-1 rounded btn btn-primary">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="property" value="{{ tag.property__text }}">
+                                        <strong>{{ tag.count }}</strong> |
+                                        {{ tag.property__text }}
+                                    </button>
+                                    <!-- <button type="button" class="btn btn-secondary">{{ tag.count }}: {{ tag.property__text }}</button> -->
+                                {% endif %}
+                            {% endfor %}
+                            <form action="{% url 'thes:tag_thesis' thesis.pk %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-control-sm">
+                                    <input type="text" name="property" id="property" value="New Tag" />
+                                </div>
+                            </form>
+                        </div>
+                    </small>
                 </div>
             {% endfor %}
             <form class="mt-4" method="post" action="{% url 'thes:home' %}">

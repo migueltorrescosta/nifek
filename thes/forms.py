@@ -6,3 +6,4 @@ class ThesisForm(ModelForm):
     class Meta:
         model = Thesis
         fields = ["content"]
+        labels = {"content": ""}
