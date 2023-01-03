@@ -22,6 +22,12 @@ class Entity(Model):
     )
     name = CharField("Name", max_length=240)
     description = TextField()
+    estimated_wealth = FloatField(
+        blank=False,
+        null=False,
+        default=14.6 * 10**9,  # This corresponds to the S&P 500 Minimum
+        validators=[MinValueValidator(0)],
+    )
     founded_on = DateTimeField(blank=True, null=False, default=timezone.now)
     dissolved_on = DateTimeField(blank=True, null=True)
     updated_on = DateTimeField(auto_now=True, null=False)
