@@ -48,7 +48,7 @@ class HoldTestCase(TestCase):
         data = {
             "name": "Entity Created During Tests",
             "description": "mocked description",
-            "wealth": 14.6 * 10**9,
+            "wealth": 1460,
         }
         self.client.force_login(user=self.user)
         response = self.client.post(relative_url, follow=True, data=data)
