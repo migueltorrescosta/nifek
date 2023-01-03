@@ -130,7 +130,7 @@ series: [{
     keys: ['from', 'to', 'weight'],
     data: [
         {% for stake in stakes %}
-            ['{{ stake.owner.name}}', '{{ stake.owned.name}}', 1],
+            ['{{ stake.owned.name}}', '{{ stake.owner.name}}', {% widthratio stake.stake 1 stake.owned.wealth %}],
         {% endfor %}
     ],
     type: 'sankey',

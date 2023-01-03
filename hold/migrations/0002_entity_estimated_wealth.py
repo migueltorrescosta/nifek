@@ -7,13 +7,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('hold', '0001_initial'),
+        ("hold", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='entity',
-            name='estimated_wealth',
-            field=models.FloatField(default=14600000000.0, validators=[django.core.validators.MinValueValidator(0)]),
+            model_name="entity",
+            name="estimated_wealth",
+            field=models.FloatField(
+                default=14600000000.0,
+                validators=[django.core.validators.MinValueValidator(0)],
+            ),
         ),
     ]

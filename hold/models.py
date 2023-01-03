@@ -5,6 +5,7 @@ from django.db.models import (
     TextField,
     DateTimeField,
     FloatField,
+    BigIntegerField,
     CASCADE,
     PROTECT,
 )
@@ -22,7 +23,8 @@ class Entity(Model):
     )
     name = CharField("Name", max_length=240)
     description = TextField()
-    estimated_wealth = FloatField(
+    wealth = BigIntegerField(
+        help_text="Million EUR",
         blank=False,
         null=False,
         default=14.6 * 10**9,  # This corresponds to the S&P 500 Minimum

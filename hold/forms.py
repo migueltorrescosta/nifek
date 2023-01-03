@@ -5,7 +5,7 @@ from .models import Entity, Stake
 class EntityForm(ModelForm):
     class Meta:
         model = Entity
-        fields = ["name", "description"]
+        fields = ["name", "description", "wealth"]
 
 
 class StakeForm(ModelForm):
