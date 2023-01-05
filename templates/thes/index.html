@@ -21,8 +21,6 @@
 
 <div class="container">
     <div class="row">
-        <!-- Blog Entries Column -->
-        <!-- List group -->
         <div class="list-group col-md-8 mt-3 left" id="myList" role="tablist">
             <div class="list-group-item list-group-item-action my-2" data-toggle="list" role="tab">
                 <form action="{% url 'thes:home' %}" method="get">
@@ -34,7 +32,6 @@
                 </form>
             </div>
             {% for thesis in thesis_list %}
-                <!-- <a class="list-group-item list-group-item-action" data-toggle="list" href="{% url 'thes:thesis_detail' thesis.pk  %}" role="tab"> -->
                 <div class="list-group-item list-group-item-action" data-toggle="list" role="tab">
                     <div class="float-right">
                         <form action="{% url 'thes:tag_thesis' thesis.pk %}" method="post">
@@ -65,30 +62,6 @@
                 </form>
             </div>
         </div>
-        <!--
-        <div class="col-md-8 mt-3 left">
-            {% for thesis in thesis_list %}
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h2 class="card-title">{{ thesis.title }}</h2>
-                    <p class="card-text aligned-left small">
-                        by {{ thesis.author }} on {{ thesis.created_on}}
-                    </p>
-                    <p class="card-text">{{thesis.content|slice:":200" }}</p>
-                    <div class="btn-group btn-group-sm mr-2" role="group" aria-label="First group">
-                        {% for tag in thesis.tags.all %}
-                        <button type="button" class="btn btn-secondary">{{ tag.property.text }}</button>
-                        {% endfor %}
-                    </div>
-                    <p class="card-text aligned-left small">
-
-                    </p>
-                    <a href="{% url 'thes:thesis_detail' thesis.pk  %}" class="btn btn-primary">Read More &rarr;</a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        -->
         {% block sidebar %}
             {% include 'sidebars/thes_sidebar.html' %}
         {% endblock sidebar %}
