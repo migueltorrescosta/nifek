@@ -7,17 +7,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('hold', '0003_alter_entity_estimated_wealth'),
+        ("hold", "0003_alter_entity_estimated_wealth"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='entity',
-            name='estimated_wealth',
+            model_name="entity",
+            name="estimated_wealth",
         ),
         migrations.AddField(
-            model_name='entity',
-            name='wealth',
-            field=models.BigIntegerField(default=14600000000.0, help_text='Million EUR', validators=[django.core.validators.MinValueValidator(0)]),
+            model_name="entity",
+            name="wealth",
+            field=models.BigIntegerField(
+                default=14600000000.0,
+                help_text="Million EUR",
+                validators=[django.core.validators.MinValueValidator(0)],
+            ),
         ),
     ]
