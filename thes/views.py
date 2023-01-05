@@ -1,20 +1,28 @@
 import logging
-from django.views import generic, View
-from django.views.generic.detail import SingleObjectMixin
-from django.http import HttpResponseRedirect
-from django.contrib import messages
-from django.db.models import Count
-from django.urls import reverse
 
-from .models import Thesis, Tag, Property
+from django.contrib import messages
+from django.contrib.postgres.search import SearchVector
+from django.db.models import Count
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.views import View, generic
+from django.views.generic.detail import SingleObjectMixin
+
 from .forms import ThesisForm
+from .models import Property, Tag, Thesis
 
 logger = logging.getLogger(__name__)
 
 
 class ThesisList(generic.ListView):
-    queryset = Thesis.objects.order_by("-created_on")
     template_name = "thes/index.html"
+
+    def get_queryset(self):
+        query_string = self.request.GET.get("q", None)
+        if query_string is None:
+            return Thesis.objects.order_by("-created_on")
+        else:
+            return Thesis.query(query_string=query_string)
 
     def get_context_data(self, **kwargs):
         context = super(ThesisList, self).get_context_data(**kwargs)
@@ -25,6 +33,7 @@ class ThesisList(generic.ListView):
             .annotate(count=Count(["thesis", "property__text"]))
             .order_by("-count")
         )
+        context["q"] = self.request.GET.get("q", None)
         return context
 
     def post(self, request):
@@ -48,6 +57,7 @@ class ThesisList(generic.ListView):
 
         thesis = form.save(commit=False)
         thesis.author = request.user
+        thesis.search_vector = SearchVector(thesis.content)
         thesis.save()
         return HttpResponseRedirect("/thes/")
 

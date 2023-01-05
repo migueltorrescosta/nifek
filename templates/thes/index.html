@@ -24,6 +24,14 @@
         <!-- Blog Entries Column -->
         <!-- List group -->
         <div class="list-group col-md-8 mt-3 left" id="myList" role="tablist">
+            <div class="list-group-item list-group-item-action my-2" data-toggle="list" role="tab">
+                <form action="{% url 'thes:home' %}" method="get">
+                    <div class="form-group my-1 mx-1">
+                        {% csrf_token %}
+                        <input type="text" name="q" class="textinput textInput form-control" required="" id="id_name" placeholder="{% if q %}{{ q }}{% else %}Search all thesis...{% endif %}">
+                    </div>
+                </form>
+            </div>
             {% for thesis in thesis_list %}
                 <!-- <a class="list-group-item list-group-item-action" data-toggle="list" href="{% url 'thes:thesis_detail' thesis.pk  %}" role="tab"> -->
                 <div class="list-group-item list-group-item-action" data-toggle="list" role="tab">
@@ -31,7 +39,7 @@
                         <form action="{% url 'thes:tag_thesis' thesis.pk %}" method="post">
                             {% csrf_token %}
                             <div class="form-control-sm">
-                                <input type="text" name="property" id="property" value="New Tag" />
+                                <input type="text" name="property" id="property" value="Add New Tag" />
                             </div>
                         </form>
                     </div>
@@ -40,24 +48,21 @@
                             {% for tag in tag_counts %}
                                 {% if tag.thesis == thesis.pk %}
                                 {{ tag.property__text }} ( {{ tag.count }} ),
-                                    <!-- <button type="button" class="my-1 mx-1 rounded btn btn-primary">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="property" value="{{ tag.property__text }}">
-                                        <strong>{{ tag.count }}</strong> |
-                                        {{ tag.property__text }}
-                                    </button> -->
                                 {% endif %}
                             {% endfor %}
                         </i>
                     </p>
-                    <small>{{ thesis.content|urlize }} 🗓{{ thesis.created_on|date:'l, m E Y'}}</small>
+                    <small>🗓 {{ thesis.created_on|date:'l, m E Y'}}<br>{{ thesis.content|urlize }} </small>
                 </div>
             {% endfor %}
-            <form class="mt-4" method="post" action="{% url 'thes:home' %}">
-                {% csrf_token %}
-                {{ create_thesis_form.content|as_crispy_field }}
-                <button type="submit" class="btn btn-success float-right">Submit new Thesis</button>
-            </form>
+            <div class="list-group-item list-group-item-action mt-2" data-toggle="list" role="tab">
+                <italic>What other thoughts are we missing?</italic>
+                <form class="mt-4" method="post" action="{% url 'thes:home' %}">
+                    {% csrf_token %}
+                    {{ create_thesis_form.content|as_crispy_field }}
+                    <button type="submit" class="btn btn-success float-right">Submit Thesis</button>
+                </form>
+            </div>
         </div>
         <!--
         <div class="col-md-8 mt-3 left">
