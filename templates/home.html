@@ -17,12 +17,13 @@
     }
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
 
 <div class="container">
     <div class="row">
         <div class="col-md-8 mt-3 left">
             <p class="card-text">Experimental stop for small apps</p>
-            <div class="row">
+            <div class="row" data-masonry='{"percentPosition": true }' >
                 {% for app in apps %}
                     <div class="card mb-1 mx-1 col-md-5">
                         <div class="card-body">

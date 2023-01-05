@@ -8,14 +8,14 @@ def home(request):
     # Render the HTML template index.html with the data in the context variable
     apps = [
         {
-            "title": "💡 Thes",
-            "description": "A record of thoughts and ideas.",
-            "url": reverse("thes:home"),
+            "title": "💼 Hold",
+            "description": "Following links of ownership through multiple corporations can be rather hard. Hold allows you to submit the ownership relations you know, and intuitively show you the full view of ownership links.",
+            "url": reverse("hold:home"),
         },
         {
-            "title": "💼 Hold",
-            "description": "Tracker for company ownership.",
-            "url": reverse("hold:home"),
+            "title": "💡 Thes",
+            "description": "Thes allows you to store thoughts and beliefs, in an easily retrievable way.",
+            "url": reverse("thes:home"),
         },
     ]
     return render(request, "home.html", context={"apps": apps})
