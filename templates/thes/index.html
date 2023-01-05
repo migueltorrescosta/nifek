@@ -39,7 +39,7 @@
                         <form action="{% url 'thes:tag_thesis' thesis.pk %}" method="post">
                             {% csrf_token %}
                             <div class="form-control-sm">
-                                <input type="text" name="property" id="property" value="Add New Tag" />
+                                <input type="text" name="property" id="property" placeholder="Add New Tag" />
                             </div>
                         </form>
                     </div>

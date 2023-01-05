@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import View, generic
 from django.views.generic.detail import SingleObjectMixin
+from django.db.utils import DataError
 
 from .forms import ThesisForm
 from .models import Property, Tag, Thesis
@@ -57,7 +58,8 @@ class ThesisList(generic.ListView):
 
         thesis = form.save(commit=False)
         thesis.author = request.user
-        thesis.search_vector = SearchVector(thesis.content)
+        thesis.save()
+        thesis.search_vector = SearchVector("content")
         thesis.save()
         return HttpResponseRedirect("/thes/")
 
@@ -87,9 +89,15 @@ class TagThesisView(SingleObjectMixin, View):
         if property_text == "":
             return _show_error_util(request, "You can't submit an empty tag!")
 
-        property, _ = Property.objects.get_or_create(
-            text=property_text, defaults={"author": request.user}
-        )
+        try:
+            property, _ = Property.objects.get_or_create(
+                text=property_text, defaults={"author": request.user}
+            )
+        except DataError:
+            return _show_error_util(
+                request,
+                "For the time being we are preventing tags that are longer than 20 characters. Apologies for any inconvenience caused 😇",
+            )
         tag_already_exists = Tag.objects.filter(
             property=property,
             thesis=thesis,
@@ -106,7 +114,7 @@ class TagThesisView(SingleObjectMixin, View):
                 property=property, thesis=thesis, tagger=request.user
             )
 
-        except:
+        except DataError:
             return _show_error_util(request, "Internal Server Error :(")
 
         messages.add_message(
