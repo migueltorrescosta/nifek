@@ -1,0 +1,1 @@
+MAXIMUM_ENTITY_VALUE = 5000  # Billion EUR

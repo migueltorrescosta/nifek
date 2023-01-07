@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, Http404
 
 from .models import Entity, Stake
 from .forms import EntityForm, StakeForm
+from .settings import MAXIMUM_ENTITY_VALUE
 
 
 def home(request):
@@ -24,6 +25,11 @@ def post_entity(request):
 
     if not form.is_valid():
         return _show_error_util(request, "The submitted Entity is invalid")
+
+    if float(form["wealth"].value()) > MAXIMUM_ENTITY_VALUE:
+        return _show_error_util(
+            request, "We cannot submit entities with over 5 Trillion EUR"
+        )
 
     try:
         entity = form.save(commit=False)
