@@ -21,6 +21,8 @@ Initial structure based on a template blog app https://djangocentral.com/buildin
 - **Paol:** Create a Polling system that allows for multiple questions. On Visualization, allow for the viewing of Paretto Optimal only points.
 - **Pink:** Promise tracker for various events. Sends out a monthly email with the status updates of all subscribers of an event.
 - **Meas:** Implementation of the framework described on `How To Measure Anything`
+- **Fute:** App to organize football matches easily (i.e. track who is coming on a first come basis / potentially other options )
+- **XP:** App focused on which experiences to prioritize for your life ( Similar to a Recommendations for one time events, with Clustering analysis for suggestions ).
 
 ## ☎ Old Apps
 
