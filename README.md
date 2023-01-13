@@ -14,7 +14,6 @@ Initial structure based on a template blog app https://djangocentral.com/buildin
 ## 📱 New Apps
 
 - **Mott:** Mottery App.
-- **Anki:** Anki Like app.
 - **Diam:** Diagram maker to increase our Mental Bandwith.
 - **Ping:** `Uptime Robot` like app.
 - **Mony:** Visually compare Monetary Values.
@@ -28,6 +27,7 @@ Initial structure based on a template blog app https://djangocentral.com/buildin
 
 - **Core:** Add user Profile Page!
 - **Thes:** Allow users to tag/untag existing Thesis
+- **Cram:** Reach out to Michael Nielsen for possible feedback,having read [his post](http://augmentingcognition.com/ltm.html)
 
 # 📚 Tech Stack
 
@@ -135,3 +135,55 @@ Look into [PageSpeed Insights](https://pagespeed.web.dev/report?url=https%3A%2F%
     user->>browser: Logout Button
     browser->>django: /auth/logout
 ```
+
+## 📷 Cram FlashCard process
+
+[Anki](https://apps.ankiweb.net/) like app
+
+### 🪣 Model structure
+
+```mermaid
+classDiagram
+    Collection <|-- Card : collection
+    User <|-- Collection : owner
+    User <|-- Card : owner
+    User <|-- Collection : editors
+    User <|-- Card : editors
+    Card <|-- UserCardScore : card
+    User <|-- UserCardScore : user
+
+    class Card{
+        -pk : Integer
+        -concept : CharField 128
+        -description : TextField
+        -difficulty : Enum
+     }
+
+    class UserCardScore{
+        -pk : Integer
+        -previous_revision_timestamp: Datetime
+        -next_revision_timestamp: Datetime
+        -last_revision: Enum<Again, Hard, Normal, Easy>
+        -number_of_failed_revisions: Integer
+        -process_revision(revision)
+     }
+
+    class Collection{
+        -pk : int
+        -title : CharField 128
+        -create_collection(title)
+        -add_card(card)
+        -delete_card(card)
+        -add_editor(user)
+        -remove_editor(user)
+    }
+
+    class User{
+        -pk : int
+    }
+```
+
+### Key notes
+
+- The Cards are shared per collection. We should email the Collection/Card owner when someone else changes a Card they use.
+- On `process_revision`, if the revision is "Again", the `next_revision_timestamp` is chosen uniformly between `1` and `2` minutes from the current time, and increment `number_of_failed_revisions` by one. Otherwise we take the time since the `last_revision_timestamp`, multiply it by `max{ 2.5 - 0.2*number_of_failed_revisions, 1.3 }`, and add up to `5%` noise value to avoid deterministic review times and collision of card review times all simultaneously. In all cases the `previous_revision_timestamp` is set to the current time.
