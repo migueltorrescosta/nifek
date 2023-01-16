@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "accounts",
     "thes",
     "hold",
+    "cram",
 ]
 
 MIDDLEWARE = [

@@ -25,4 +25,5 @@ urlpatterns = [
     path("auth/", include("magiclink.urls", namespace="magiclink")),
     path("thes/", include("thes.urls", namespace="thes")),
     path("hold/", include("hold.urls", namespace="hold")),
+    path("cram/", include("cram.urls", namespace="cram")),
 ]

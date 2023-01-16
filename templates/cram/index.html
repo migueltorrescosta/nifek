@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<style>
+    body {
+        font-family: "Roboto", sans-serif;
+        font-size: 17px;
+        background-color: #fdfdfd;
+    }
+
+    .head_text {
+        color: white;
+    }
+
+    .card {
+        box-shadow: 0 16px 48px #E3E7EB;
+    }
+</style>
+
+
+<div class="container">
+    <div class="row">
+        <div class="list-group col-md-8 mt-3 left" id="myList" role="tablist">
+            {% for collection in collection_list %}
+                <div class="list-group-item list-group-item-action" data-toggle="list" role="tab">
+                    <a href="{% url 'cram:collection_detail' collection.id  %}"><h5>{{ collection.title }}</h5></a>
+                    {{ collection.description }}<br>
+                    <small>🗓 {{ collection.created_on|date:'l, m E Y'}} 🖊{{collection.owner }}</small>
+                </div>
+            {% endfor %}
+        </div>
+        {% block sidebar %}
+            {% include 'sidebars/cram_sidebar.html' %}
+        {% endblock sidebar %}
+    </div>
+</div>
+{%endblock%}

@@ -17,5 +17,10 @@ def home(request):
             "description": "Thes allows you to store thoughts and beliefs, in an easily retrievable way.",
             "url": reverse("thes:home"),
         },
+        {
+            "title": "📓 Cram",
+            "description": "Cram allows you to study more efficiently by using Spaced Repetition.",
+            "url": reverse("cram:home"),
+        },
     ]
     return render(request, "home.html", context={"apps": apps})

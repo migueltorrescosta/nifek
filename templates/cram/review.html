@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 card mt-3 left  top">
+            <div class="card-body my-1">
+                <form method="post" class="form-inline" action="{% url 'cram:submit_review' user_card_score.pk %}">
+                    {% csrf_token %}
+                    <button type="button" class="float-left btn btn-secondary mx-2" data-toggle="tooltip" data-placement="right" title="{{ user_card_score.card.description }}">
+                        {{ user_card_score.card.concept }}
+                    </button>
+                    {{ user_card_score_form.last_revision | as_crispy_field }}
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn mx-2 btn-success float-right my-2">Submit</button>
+                    </div>
+                </form>
+                <small>Hover over the card to see the description</small>
+            </div>
+        </div>
+        {% block sidebar %} {% include 'sidebars/cram_sidebar.html' %} {% endblock sidebar %}
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 card mb-4  mt-3 left  top">
+            <div class="card-body">
+                <h3>{{ collection.title }}</h3>
+                <p class="card-text ">{{ collection.description }}</p>
+
+                <ul class="list-group">
+                    {% for card in collection.cram_cards.all %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <p class="my-0 "><strong>{{ card.concept }}:</strong> {{ card.description }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+        </div>
+        {% block sidebar %} {% include 'sidebars/cram_sidebar.html' %} {% endblock sidebar %}
+    </div>
+</div>
+
+{% endblock content %}

@@ -115,7 +115,7 @@ Look into [PageSpeed Insights](https://pagespeed.web.dev/report?url=https%3A%2F%
 
 # 🪄 Data Flows
 
-## Auth via MagicLinks
+## 🕵 Auth via MagicLinks
 
 ```mermaid
   sequenceDiagram
@@ -139,6 +139,9 @@ Look into [PageSpeed Insights](https://pagespeed.web.dev/report?url=https%3A%2F%
 ## 📷 Cram FlashCard process
 
 [Anki](https://apps.ankiweb.net/) like app
+
+- The Cards are shared per collection. We should email the Collection/Card owner when someone else changes a Card they use.
+- On `process_revision`, if the revision is "Again", the `next_revision_timestamp` is chosen uniformly between `1` and `2` minutes from the current time, and increment `number_of_failed_revisions` by one. Otherwise we take the time since the `last_revision_timestamp`, multiply it by `max{ 2.5 - 0.2*number_of_failed_revisions, 1.3 }`, and add up to `5%` noise value to avoid deterministic review times and collision of card review times all simultaneously. In all cases the `previous_revision_timestamp` is set to the current time.
 
 ### 🪣 Model structure
 
@@ -172,8 +175,6 @@ classDiagram
         -pk : int
         -title : CharField 128
         -create_collection(title)
-        -add_card(card)
-        -delete_card(card)
         -add_editor(user)
         -remove_editor(user)
     }
@@ -182,8 +183,3 @@ classDiagram
         -pk : int
     }
 ```
-
-### Key notes
-
-- The Cards are shared per collection. We should email the Collection/Card owner when someone else changes a Card they use.
-- On `process_revision`, if the revision is "Again", the `next_revision_timestamp` is chosen uniformly between `1` and `2` minutes from the current time, and increment `number_of_failed_revisions` by one. Otherwise we take the time since the `last_revision_timestamp`, multiply it by `max{ 2.5 - 0.2*number_of_failed_revisions, 1.3 }`, and add up to `5%` noise value to avoid deterministic review times and collision of card review times all simultaneously. In all cases the `previous_revision_timestamp` is set to the current time.

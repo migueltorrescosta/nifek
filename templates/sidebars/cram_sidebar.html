@@ -1,0 +1,22 @@
+{% block sidebar %}
+
+<style>
+    .card {
+        box-shadow: 0 16px 48px #E3E7EB;
+    }
+</style>
+
+<div class="col-md-4 float-right ">
+    <div class="card my-4">
+        <h5 class="card-header">CRAM</h5>
+        <div class="card-body">
+            <small class="card-text">
+                CRAM is a tool to help you study for exams.
+                It allows you to create collections of cards with concepts to memorize using spaced repetition
+                Start a <a href="{% url 'cram:review' %}">revision session</a> or <a href="{% url 'cram:collections' %}">view your collections</a>.
+            </small>
+        </div>
+    </div>
+</div>
+
+{% endblock sidebar %}
