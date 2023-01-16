@@ -16,7 +16,7 @@ def home(request):
 def review(request):
     if not request.user.is_authenticated:
         messages.error(request, "You must be logged in to review cards")
-        return redirect("accounts:login")
+        return redirect("magiclink:login")
 
     if not Collection.objects.filter(starred_by=request.user).exists():
         messages.error(
