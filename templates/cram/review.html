@@ -6,17 +6,18 @@
     <div class="row">
         <div class="col-md-8 card mt-3 left  top">
             <div class="card-body my-1">
+                <h3>{{ user_card_score.card.concept }}</h3>
                 <form method="post" class="form-inline" action="{% url 'cram:submit_review' user_card_score.pk %}">
                     {% csrf_token %}
-                    <button type="button" class="float-left btn btn-secondary mx-2" data-toggle="tooltip" data-placement="right" title="{{ user_card_score.card.description }}">
-                        {{ user_card_score.card.concept }}
-                    </button>
-                    {{ user_card_score_form.last_revision | as_crispy_field }}
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn mx-2 btn-success float-right my-2">Submit</button>
+                        <!-- These values need to match the ones in the RevisionStatus Enu-->
+                        <button type="submit" name="last_revision" value="0" class="btn mx-2 btn-danger float-right my-2">Again</button>
+                        <button type="submit" name="last_revision" value="1" class="btn mx-2 btn-warning float-right my-2">Hard</button>
+                        <button type="submit" name="last_revision" value="2" class="btn mx-2 btn-info float-right my-2">Normal</button>
+                        <button type="submit" name="last_revision" value="3" class="btn mx-2 btn-success float-right my-2">Easy</button>
                     </div>
                 </form>
-                <small>Hover over the card to see the description</small>
+                <small class="float-right">{{ user_card_score.card.description }}</small>
             </div>
         </div>
         {% block sidebar %} {% include 'sidebars/cram_sidebar.html' %} {% endblock sidebar %}
