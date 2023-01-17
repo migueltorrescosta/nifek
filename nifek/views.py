@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse
+import random
 
 
 def home(request):
@@ -23,4 +24,5 @@ def home(request):
             "url": reverse("cram:home"),
         },
     ]
+    random.shuffle(apps)
     return render(request, "home.html", context={"apps": apps})

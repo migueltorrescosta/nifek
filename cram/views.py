@@ -1,13 +1,15 @@
 from django.contrib import messages
+from django.db.models import Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils import timezone
 from django.views import generic
-from django.db.models import Count
+
 from .enums import RevisionStatus
-from .forms import UserCardScoreForm, CardForm
-from .models import Card, Collection, UserCardScore
 from .exceptions import NoNextCardException
+from .forms import CardForm, UserCardScoreForm
+from .models import Card, Collection, UserCardScore
 
 
 def home(request):
@@ -56,9 +58,16 @@ def review(request):
         messages.info(request, str(e))
         return redirect("cram:collections")
 
+    number_of_cards_to_process = (
+        UserCardScore.objects.filter(user=request.user)
+        .filter(next_revision_timestamp__lte=timezone.now())
+        .filter(card__collection__starred_by=request.user)
+        .count()
+    )
     context = {
+        "number_of_cards_to_process": number_of_cards_to_process,
         "user_card_score": next_user_card_score,
-        "user_card_score_form": UserCardScoreForm(instance=next_user_card_score),
+        # "user_card_score_form": UserCardScoreForm(instance=next_user_card_score),
     }
     return render(request, "cram/review.html", context=context)
 
@@ -96,7 +105,7 @@ class CollectionDetail(generic.DetailView):
     template_name = "cram/collection_detail.html"
 
     def get_context_data(self, object, **kwargs):
-        context = super(CollectionDetail, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context["starred"] = bool(self.request.user in object.starred_by.all())
         context["create_card_form"] = CardForm()
         return context

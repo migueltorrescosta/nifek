@@ -145,7 +145,7 @@ class UserCardScore(Model):
                 .filter(card__collection__starred_by=user)
                 .count()
             )
-            if new_card is None or n_cards_being_learnt > 10:
+            if new_card is None or n_cards_being_learnt > 2:
                 next_card_timestamp = (
                     UserCardScore.objects.filter(user=user)
                     .filter(next_revision_timestamp__gte=timezone.now())

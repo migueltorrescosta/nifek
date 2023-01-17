@@ -26,7 +26,7 @@ class ThesisList(generic.ListView):
             return Thesis.query(query_string=query_string)
 
     def get_context_data(self, **kwargs):
-        context = super(ThesisList, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context["create_thesis_form"] = ThesisForm()
         context["tag_counts"] = (
             Tag.objects.filter(thesis__in=context["thesis_list"])

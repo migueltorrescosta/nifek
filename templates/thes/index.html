@@ -26,7 +26,7 @@
                 <form action="{% url 'thes:home' %}" method="get">
                     <div class="form-group my-1 mx-1">
                         {% csrf_token %}
-                        <input type="text" name="q" class="textinput textInput form-control" required="" id="id_name" placeholder="{% if q %}{{ q }}{% else %}Search all thesis...{% endif %}">
+                        <input type="text" name="q" class="textinput textInput form-control" id="id_name" placeholder="{% if q %}{{ q }}{% else %}Search all thesis...{% endif %}">
                         {% if q %}<small>Results sorted by similarity to the query above</small>{% endif %}
                     </div>
                 </form>

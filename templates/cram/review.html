@@ -6,6 +6,7 @@
     <div class="row">
         <div class="col-md-8 card mt-3 left  top">
             <div class="card-body my-1">
+                <small><p class="float-right">{{ number_of_cards_to_process }} cards left</p></small>
                 <h3>{{ user_card_score.card.concept }}</h3>
                 <small>Deck: {{ user_card_score.card.collection.title }}</small>
                 <form method="post" class="form-inline" action="{% url 'cram:submit_review' user_card_score.pk %}">

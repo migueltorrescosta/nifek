@@ -79,7 +79,7 @@ def post_stake(request):
             f"Successfully submitted {100* stake.stake:.1f}% stake of {stake.owned.name} by {stake.owner.name}, by {stake.submitted_by.username}",
         )
     except:
-        return _show_error_util(request, f"Failed to create stake")
+        return _show_error_util(request, "Failed to create stake")
     return HttpResponseRedirect(request.META.get("HTTP_REFERER", reverse("hold:home")))
 
 
@@ -88,7 +88,7 @@ class EntityDetail(generic.DetailView):
     template_name = "hold/entity_detail.html"
 
     def get_context_data(self, object, **kwargs):
-        context = super(EntityDetail, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         relevant_stakes = object.recursive_stakes
         context["entity_list"] = Entity.objects.order_by("name")
         context["stakes"] = Stake.objects.filter(
