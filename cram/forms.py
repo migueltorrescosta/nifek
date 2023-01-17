@@ -1,11 +1,8 @@
-from django.forms import (
-    ModelForm,
-    ChoiceField,
-    CheckboxSelectMultiple,
-    RadioSelect,
-)
-from .models import Card, UserCardScore
+from django.forms import ChoiceField, ModelForm, CharField
+
 from .enums import RevisionStatus
+from .models import Card, Collection, UserCardScore
+
 
 # Create the form class.
 class UserCardScoreForm(ModelForm):
@@ -20,6 +17,18 @@ class UserCardScoreForm(ModelForm):
 
 
 class CardForm(ModelForm):
+
+    concept = CharField()
+
     class Meta:
         model = Card
         fields = ["concept", "description"]
+
+
+class CollectionForm(ModelForm):
+
+    title = CharField()
+
+    class Meta:
+        model = Collection
+        fields = ["title", "description"]

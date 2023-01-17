@@ -21,12 +21,24 @@
     </div>
     {% if create_card_form %}
         <div class="card my-4">
-            <h5 class="card-header">Add New Card</h5>
+            <h5 class="card-header">Create a New Card</h5>
             <div class="card-body">
                 <form class="mt-4" method="post" action="{% url 'cram:collection_detail' collection.pk %}">
                     {% csrf_token %}
                     {{ create_card_form | crispy }}
-                    <button type="submit" class="btn btn-success float-right">Submit New Card</button>
+                    <button type="submit" class="btn btn-success float-right">Submit</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+    {% if create_collection_form %}
+        <div class="card my-4">
+            <h5 class="card-header">Create a new Collection</h5>
+            <div class="card-body">
+                <form class="mt-4" method="post" action="{% url 'cram:collections' %}">
+                    {% csrf_token %}
+                    {{ create_collection_form | crispy }}
+                    <button type="submit" class="btn btn-success float-right">Submit</button>
                 </form>
             </div>
         </div>

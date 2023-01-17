@@ -8,7 +8,7 @@ from django.views import generic
 
 from .enums import RevisionStatus
 from .exceptions import NoNextCardException
-from .forms import CardForm, UserCardScoreForm
+from .forms import CardForm, CollectionForm, UserCardScoreForm
 from .models import Card, Collection, UserCardScore
 
 
@@ -97,12 +97,47 @@ class CollectionListView(generic.ListView):
         queryset = super().get_queryset()
         if (
             self.request.user.is_authenticated
-            and self.request.GET.get("show-all", None) is None
+            and self.request.GET.get("show", "all") != "all"
             and queryset.filter(owner=self.request.user).exists()
         ):
             queryset = queryset.filter(owner=self.request.user)
         queryset = queryset.annotate(count=Count("cram_cards"))
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["create_collection_form"] = CollectionForm()
+        return context
+
+    def post(self, request):
+        # Creates a collection
+
+        if not request.user.is_authenticated:
+            messages.add_message(
+                request,
+                messages.ERROR,
+                "You cannot create a Collection without logging in",
+            )
+            return HttpResponseRedirect(
+                request.META.get(
+                    "HTTP_REFERER",
+                    reverse("cram:collections"),
+                )
+            )
+
+        form = CollectionForm(data=request.POST)
+        collection = form.save(commit=False)
+        collection.collection = collection
+        collection.owner = request.user
+        collection.save()
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            f"Collection {collection.title} created successfully",
+        )
+        return HttpResponseRedirect(
+            reverse("cram:collection_detail", kwargs={"pk": collection.pk})
+        )
 
 
 class CollectionDetail(generic.DetailView):
@@ -112,7 +147,8 @@ class CollectionDetail(generic.DetailView):
     def get_context_data(self, object, **kwargs):
         context = super().get_context_data(**kwargs)
         context["starred"] = bool(self.request.user in object.starred_by.all())
-        context["create_card_form"] = CardForm()
+        if self.request.user == self.get_object().owner:
+            context["create_card_form"] = CardForm()
         return context
 
     def post(self, request, pk):
@@ -122,7 +158,7 @@ class CollectionDetail(generic.DetailView):
             messages.add_message(
                 request,
                 messages.ERROR,
-                "You cannot post a Thesis without logging in",
+                "You cannot create a Card without logging in",
             )
             return HttpResponseRedirect(
                 request.META.get(
@@ -149,6 +185,7 @@ class CollectionDetail(generic.DetailView):
         form = CardForm(data=request.POST)
         card = form.save(commit=False)
         card.collection = collection
+        card.owner = request.user
         card.save()
         messages.add_message(
             request,
