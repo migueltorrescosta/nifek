@@ -1,4 +1,5 @@
 {% block sidebar %}
+{% load crispy_forms_tags %}
 
 <style>
     .card {
@@ -18,6 +19,18 @@
             <a href="{% url 'cram:review' %}" class="btn btn-primary btn-sm float-right">Start revising</a>
         </div>
     </div>
+    {% if create_card_form %}
+        <div class="card my-4">
+            <h5 class="card-header">Add New Card</h5>
+            <div class="card-body">
+                <form class="mt-4" method="post" action="{% url 'cram:collection_detail' collection.pk %}">
+                    {% csrf_token %}
+                    {{ create_card_form | crispy }}
+                    <button type="submit" class="btn btn-success float-right">Submit New Card</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
 </div>
 
 {% endblock sidebar %}

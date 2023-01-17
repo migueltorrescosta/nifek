@@ -26,11 +26,6 @@
                     </div>
                 {% endfor %}
                 </div>
-                <form class="mt-4" method="post" action="{% url 'cram:collection_detail' collection.pk %}">
-                    {% csrf_token %}
-                    {{ create_card_form | crispy }}
-                    <button type="submit" class="btn btn-success float-right">Submit New Card</button>
-                </form>
             </div>
         </div>
         {% block sidebar %} {% include 'sidebars/cram_sidebar.html' %} {% endblock sidebar %}
