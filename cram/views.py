@@ -58,16 +58,21 @@ def review(request):
         messages.info(request, str(e))
         return redirect("cram:collections")
 
-    number_of_cards_to_process = (
+    number_of_cards_to_review = (
         UserCardScore.objects.filter(user=request.user)
         .filter(next_revision_timestamp__lte=timezone.now())
         .filter(card__collection__starred_by=request.user)
         .count()
     )
+    number_of_cards_to_learn = (
+        Card.objects.filter(collection__starred_by=request.user)
+        .exclude(cram_scores__user=request.user)
+        .count()
+    )
     context = {
-        "number_of_cards_to_process": number_of_cards_to_process,
+        "number_of_cards_to_review": number_of_cards_to_review,
+        "number_of_cards_to_learn": number_of_cards_to_learn,
         "user_card_score": next_user_card_score,
-        # "user_card_score_form": UserCardScoreForm(instance=next_user_card_score),
     }
     return render(request, "cram/review.html", context=context)
 
