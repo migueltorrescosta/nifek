@@ -1,11 +1,11 @@
-from django.views import generic
+from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.contrib import messages
-from django.http import HttpResponseRedirect, Http404
+from django.views import generic
 
-from .models import Entity, Stake
 from .forms import EntityForm, StakeForm
+from .models import Entity, Stake
 from .settings import MAXIMUM_ENTITY_VALUE
 
 

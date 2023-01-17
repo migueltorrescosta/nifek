@@ -1,16 +1,48 @@
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.views import generic
 from django.utils import timezone
-from .models import Card, Collection, UserCardScore
+from django.views import generic
+
 from .enums import RevisionStatus
 from .forms import UserCardScoreForm
+from .models import Card, Collection, UserCardScore
 
 
 def home(request):
     url = reverse("cram:collections")
     return redirect(url)
+
+
+def star_collection(request, pk):
+    collection = Collection.objects.get(pk=pk)
+    if request.user not in collection.starred_by.all():
+        collection.starred_by.add(request.user)
+        collection.save()
+    else:
+        messages.info(request, "You have already starred this collection")
+    return HttpResponseRedirect(
+        request.META.get(
+            "HTTP_REFERER",
+            reverse("cram:collection_detail", kwargs={"pk": pk}),
+        )
+    )
+
+
+def unstar_collection(request, pk):
+    collection = Collection.objects.get(pk=pk)
+    if request.user in collection.starred_by.all():
+        collection.starred_by.remove(request.user)
+        collection.save()
+    else:
+        messages.info(request, "This collection was already not starred by you")
+    return HttpResponseRedirect(
+        request.META.get(
+            "HTTP_REFERER",
+            reverse("cram:collection_detail", kwargs={"pk": pk}),
+        )
+    )
 
 
 def review(request):
@@ -105,3 +137,14 @@ class CollectionListView(generic.ListView):
 class CollectionDetail(generic.DetailView):
     model = Collection
     template_name = "cram/collection_detail.html"
+
+    def get_context_data(self, object, **kwargs):
+        context = super(CollectionDetail, self).get_context_data(**kwargs)
+        context["starred"] = bool(self.request.user in object.starred_by.all())
+        print("=" * 50)
+        print(self.request.user)
+        print(object.starred_by.all())
+        print(self.request.user in object.starred_by.all())
+        print(bool(self.request.user in object.starred_by.all()))
+        print(context["starred"])
+        return context

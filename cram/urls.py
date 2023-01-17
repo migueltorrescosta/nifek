@@ -17,4 +17,14 @@ urlpatterns = [
         views.UserCardScoreDetailView.as_view(),
         name="submit_review",
     ),
+    path(
+        "collections/<int:pk>/star",
+        views.star_collection,
+        name="star_collection",
+    ),
+    path(
+        "collections/<int:pk>/unstar",
+        views.unstar_collection,
+        name="unstar_collection",
+    ),
 ]
