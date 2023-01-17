@@ -19,6 +19,7 @@ from django.utils import timezone
 from accounts.models import User
 
 from .enums import RevisionStatus
+from .exceptions import NoNextCardException
 
 PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(1)]
 
@@ -40,7 +41,6 @@ class Collection(Model):
 
 
 class Card(Model):
-    owner = ForeignKey(User, null=False, on_delete=PROTECT, related_name="cram_cards")
     collection = ForeignKey(
         Collection, on_delete=SET_NULL, null=True, related_name="cram_cards"
     )
@@ -54,6 +54,13 @@ class Card(Model):
 
     class Meta:
         ordering = ["concept"]
+
+    def update_success_rate(self) -> bool:
+        numerator = self.cram_scores.filter(last_revision=RevisionStatus.AGAIN).count()
+        denominator = self.cram_scores.count()
+        self.success_rate = (numerator + 1) / (denominator + 2)
+        self.save()
+        return True
 
     def __str__(self):
         return f"Card {self.concept} on Collection {self.collection.title}"
@@ -83,12 +90,13 @@ class UserCardScore(Model):
 
     def process_revision(self, revision: RevisionStatus) -> bool:
         last_interval = timezone.now() - self.last_revision_timestamp
+        last_interval = max(last_interval, timedelta(seconds=1))
         if revision == RevisionStatus.AGAIN:
-            next_interval = timedelta(minutes=2)
+            next_interval = timedelta(minutes=1)
             self.number_of_failed_revisions += 1
-        elif last_interval <= timedelta(minutes=5):
+        elif last_interval <= timedelta(minutes=3):
             next_interval = timedelta(minutes=10)
-        elif last_interval <= timedelta(minutes=15):
+        elif last_interval <= timedelta(minutes=20):
             next_interval = timedelta(hours=20)
         else:
             next_interval = (
@@ -96,7 +104,72 @@ class UserCardScore(Model):
                 * max(1.3, 2.5 - 0.1 * self.number_of_failed_revisions)
                 * random.uniform(1, 1.01)
             )
+        self.last_revision = revision
         self.last_revision_timestamp = timezone.now()
         self.next_revision_timestamp = timezone.now() + next_interval
         self.save()
+        self.card.update_success_rate()
         return True
+
+    @classmethod
+    def get_user_next_card_score(self, user: User) -> "Card":
+        if not Collection.objects.filter(starred_by=user).exists():
+            raise NoNextCardException(
+                "You have no collections starred. Star a collection to start learning."
+            )
+
+        if not Card.objects.filter(collection__starred_by=user).exists():
+            raise NoNextCardException(
+                "You have no starred collections with at least one card. Star a collection to start learning."
+            )
+
+        next_user_card_score = (
+            UserCardScore.objects.filter(user=user)
+            .filter(next_revision_timestamp__lte=timezone.now())
+            .filter(card__collection__starred_by=user)
+            .order_by("next_revision_timestamp")
+            .first()
+        )
+
+        if next_user_card_score is None:
+            new_card = (
+                Card.objects.filter(collection__starred_by=user)
+                .filter(collection__starred_by=user)
+                .exclude(cram_scores__user=user)
+                .order_by("-success_rate")
+                .first()
+            )
+            n_cards_being_learnt = (
+                UserCardScore.objects.filter(user=user)
+                .filter(last_revision=RevisionStatus.AGAIN)
+                .filter(card__collection__starred_by=user)
+                .count()
+            )
+            if new_card is None or n_cards_being_learnt > 10:
+                next_card_timestamp = (
+                    UserCardScore.objects.filter(user=user)
+                    .filter(next_revision_timestamp__gte=timezone.now())
+                    .order_by("next_revision_timestamp")
+                    .first()
+                ).next_revision_timestamp
+                timedelta = next_card_timestamp - timezone.now()
+                minutes = 1 + int(timedelta.total_seconds() / 60)
+                if minutes <= 60:
+                    raise NoNextCardException(
+                        f"You have no cards to review at the moment. Come back in {minutes} minute{'s' if minutes != 1 else ''}"
+                    )
+                else:
+                    hours = 1 + int(minutes / 3600)
+                    raise NoNextCardException(
+                        f"You have no cards to review at the moment. Come back in {hours} hour{'s' if hours != 1 else ''}"
+                    )
+            else:
+                next_user_card_score = UserCardScore.objects.create(
+                    card=new_card,
+                    user=user,
+                    last_revision=RevisionStatus.AGAIN,
+                    number_of_failed_revisions=0,
+                )
+                next_user_card_score.save()
+
+        return next_user_card_score

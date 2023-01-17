@@ -4,7 +4,7 @@ from django.forms import (
     CheckboxSelectMultiple,
     RadioSelect,
 )
-from .models import UserCardScore
+from .models import Card, UserCardScore
 from .enums import RevisionStatus
 
 # Create the form class.
@@ -17,3 +17,9 @@ class UserCardScoreForm(ModelForm):
     class Meta:
         model = UserCardScore
         fields = ["last_revision"]
+
+
+class CardForm(ModelForm):
+    class Meta:
+        model = Card
+        fields = ["concept", "description"]

@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
 
 <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
 
@@ -24,6 +26,11 @@
                     </div>
                 {% endfor %}
                 </div>
+                <form class="mt-4" method="post" action="{% url 'cram:collection_detail' collection.pk %}">
+                    {% csrf_token %}
+                    {{ create_card_form | crispy }}
+                    <button type="submit" class="btn btn-success float-right">Submit New Card</button>
+                </form>
             </div>
         </div>
         {% block sidebar %} {% include 'sidebars/cram_sidebar.html' %} {% endblock sidebar %}

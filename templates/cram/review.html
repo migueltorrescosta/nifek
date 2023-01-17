@@ -7,6 +7,7 @@
         <div class="col-md-8 card mt-3 left  top">
             <div class="card-body my-1">
                 <h3>{{ user_card_score.card.concept }}</h3>
+                <small>Deck: {{ user_card_score.card.collection.title }}</small>
                 <form method="post" class="form-inline" action="{% url 'cram:submit_review' user_card_score.pk %}">
                     {% csrf_token %}
                     <div class="d-flex justify-content-end">
