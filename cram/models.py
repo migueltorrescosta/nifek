@@ -133,52 +133,54 @@ class UserCardScore(Model):
             .first()
         )
 
-        if next_user_card_score is None:
-            new_card = (
-                Card.objects.filter(collection__starred_by=user)
-                .filter(collection__starred_by=user)
-                .exclude(cram_scores__user=user)
-                .order_by("-success_rate")
-                .first()
-            )
-            n_cards_being_learnt = (
-                UserCardScore.objects.filter(user=user)
-                .filter(last_revision=RevisionStatus.AGAIN)
-                .filter(card__collection__starred_by=user)
-                .count()
-            )
-            if new_card is None or n_cards_being_learnt > 2:
-                next_card_timestamp = (
-                    UserCardScore.objects.filter(user=user)
-                    .filter(next_revision_timestamp__gte=timezone.now())
-                    .order_by("next_revision_timestamp")
-                    .first()
-                ).next_revision_timestamp
-                timedelta = next_card_timestamp - timezone.now()
-                minutes = 1 + int(timedelta.total_seconds() / 60)
-                if minutes <= 60:
-                    time = f"{minutes} minute{'s' if minutes != 1 else ''}"
-                else:
-                    hours = 1 + int(minutes / 3600)
-                    time = f"{hours} hour{'s' if hours != 1 else ''}"
-                cards_to_revise = {
-                    c["card__concept"]
-                    for c in UserCardScore.objects.filter(user=user)
-                    .filter(last_revision=RevisionStatus.AGAIN)
-                    .filter(card__collection__starred_by=user)
-                    .values("card__concept")
-                }
-                raise NoNextCardException(
-                    f"You have no cards to review at the moment. Come back in {time}. The cards you most need to revise are: {', '.join(cards_to_revise)}"
-                )
+        if next_user_card_score is not None:
+            return next_user_card_score
 
-            else:
-                next_user_card_score = UserCardScore.objects.create(
-                    card=new_card,
-                    user=user,
-                    last_revision=RevisionStatus.AGAIN,
-                    number_of_failed_revisions=0,
-                )
-                next_user_card_score.save()
+        new_card = (
+            Card.objects.filter(collection__starred_by=user)
+            .filter(collection__starred_by=user)
+            .exclude(cram_scores__user=user)
+            .order_by("-success_rate")
+            .first()
+        )
+        n_cards_being_learnt = (
+            UserCardScore.objects.filter(user=user)
+            .filter(last_revision=RevisionStatus.AGAIN)
+            .filter(card__collection__starred_by=user)
+            .count()
+        )
 
-        return next_user_card_score
+        if new_card is not None and n_cards_being_learnt <= 5:
+
+            next_user_card_score = UserCardScore.objects.create(
+                card=new_card,
+                user=user,
+                last_revision=RevisionStatus.AGAIN,
+                number_of_failed_revisions=0,
+            )
+            next_user_card_score.save()
+            return next_user_card_score
+
+        next_card_timestamp = (
+            UserCardScore.objects.filter(user=user)
+            .filter(next_revision_timestamp__gte=timezone.now())
+            .order_by("next_revision_timestamp")
+            .first()
+        ).next_revision_timestamp
+        timedelta = next_card_timestamp - timezone.now()
+        minutes = 1 + int(timedelta.total_seconds() / 60)
+        if minutes <= 60:
+            time = f"{minutes} minute{'s' if minutes != 1 else ''}"
+        else:
+            hours = 1 + int(minutes / 3600)
+            time = f"{hours} hour{'s' if hours != 1 else ''}"
+        cards_to_revise = {
+            c["card__concept"]
+            for c in UserCardScore.objects.filter(user=user)
+            .filter(last_revision=RevisionStatus.AGAIN)
+            .filter(card__collection__starred_by=user)
+            .values("card__concept")
+        }
+        raise NoNextCardException(
+            f"You have no cards to review at the moment. Come back in {time}. The cards you most need to revise are: {', '.join(cards_to_revise)}"
+        )
