@@ -5,7 +5,7 @@ run:
 
 .PHONY: coverage
 coverage:
-	python manage.py collectstatic && pip install coverage && coverage erase && coverage run manage.py test && coverage report && coverage html
+	python manage.py collectstatic --no-input && pip install coverage && coverage erase && coverage run manage.py test && coverage report && coverage html
 
 .PHONY: perms
 perms:

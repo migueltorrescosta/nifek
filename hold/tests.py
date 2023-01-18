@@ -7,7 +7,7 @@ from django.urls import reverse
 class HoldTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create(
-            email="test_user@nifek.com", username="test_user_for_hold_app"
+            email="test_hold_user@nifek.com", username="test_user_for_hold_app"
         )
         create_entity = lambda name, description: Entity.objects.create(
             submitted_by=self.user, name=name, description=description

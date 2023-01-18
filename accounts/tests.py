@@ -1,12 +1,13 @@
 from django.test import TestCase
-from accounts.models import User
 from django.urls import reverse
+
+from accounts.models import User
 
 
 class AccountsTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create(
-            email="test_user@nifek.com", username="test_user_for_hold_app"
+            email="test_accounts_user@nifek.com", username="test_user_for_accounts_app"
         )
 
     def test_login_page_exists(self):
