@@ -99,10 +99,7 @@ class UserCardScore(Model):
         else:
             self.number_of_failed_revisions += 1
 
-        interval_is_below_minimum = (revision == RevisionStatus.AGAIN) or (
-            next_interval < minimum_time_interval
-        )
-        if interval_is_below_minimum:
+        if revision == RevisionStatus.AGAIN or next_interval < minimum_time_interval:
             next_interval = minimum_time_interval
 
         self.last_revision = revision
