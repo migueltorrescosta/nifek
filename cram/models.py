@@ -90,12 +90,14 @@ class UserCardScore(Model):
         last_interval = timezone.now() - self.last_revision_timestamp
         last_interval = max(last_interval, timedelta(seconds=1))
         if revision == RevisionStatus.AGAIN:
-            next_interval = timedelta(minutes=1)
             self.number_of_failed_revisions += 1
-        elif last_interval <= timedelta(minutes=3):
-            next_interval = timedelta(minutes=10)
-        elif last_interval <= timedelta(minutes=20):
-            next_interval = timedelta(hours=20)
+        initial_intervals = [1200, 60, 5]  # in minutes
+        while initial_intervals and last_interval <= timedelta(
+            minutes=initial_intervals.pop()
+        ):
+            pass
+        if initial_intervals:
+            next_interval = timedelta(minutes=initial_intervals.pop())
         else:
             next_interval = (
                 last_interval
@@ -153,14 +155,21 @@ class UserCardScore(Model):
                 timedelta = next_card_timestamp - timezone.now()
                 minutes = 1 + int(timedelta.total_seconds() / 60)
                 if minutes <= 60:
-                    raise NoNextCardException(
-                        f"You have no cards to review at the moment. Come back in {minutes} minute{'s' if minutes != 1 else ''}"
-                    )
+                    time = f"{minutes} minute{'s' if minutes != 1 else ''}"
                 else:
                     hours = 1 + int(minutes / 3600)
-                    raise NoNextCardException(
-                        f"You have no cards to review at the moment. Come back in {hours} hour{'s' if hours != 1 else ''}"
-                    )
+                    time = f"{hours} hour{'s' if hours != 1 else ''}"
+                cards_to_revise = {
+                    c["card__concept"]
+                    for c in UserCardScore.objects.filter(user=user)
+                    .filter(last_revision=RevisionStatus.AGAIN)
+                    .filter(card__collection__starred_by=user)
+                    .values("card__concept")
+                }
+                raise NoNextCardException(
+                    f"You have no cards to review at the moment. Come back in {time}. The cards you most need to revise are: {', '.join(cards_to_revise)}"
+                )
+
             else:
                 next_user_card_score = UserCardScore.objects.create(
                     card=new_card,
