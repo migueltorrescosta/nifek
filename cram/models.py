@@ -19,6 +19,7 @@ from django.utils import timezone
 
 from accounts.models import User
 
+from .settings import MINIMUM_TIME_INTERVAL
 from .enums import RevisionStatus
 from .exceptions import NoNextCardException
 
@@ -91,15 +92,16 @@ class UserCardScore(Model):
     def process_revision(self, revision: RevisionStatus) -> bool:
         last_interval = timezone.now() - self.last_revision_timestamp
         last_interval = max(last_interval, timedelta(seconds=1))
-        if revision == RevisionStatus.AGAIN:
-            self.number_of_failed_revisions += 1
-            next_interval = timedelta(minutes=5)
-        else:
+        if revision != RevisionStatus.AGAIN:
             next_interval = (
                 last_interval
                 * max(1.3, 2.5 - 0.1 * self.number_of_failed_revisions)
                 * random.uniform(1, 1.01)
             )
+        else:
+            self.number_of_failed_revisions += 1
+            next_interval = MINIMUM_TIME_INTERVAL
+        next_interval = max(next_interval, MINIMUM_TIME_INTERVAL)
         self.last_revision = revision
         self.last_revision_timestamp = timezone.now()
         if revision != RevisionStatus.AGAIN and next_interval < timedelta(minutes=7):
