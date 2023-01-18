@@ -63,7 +63,7 @@ class Card(Model):
         return True
 
     def __str__(self):
-        return f"Card {self.concept} on Collection {self.collection.title}"
+        return f"{self.concept} ({self.collection.title if self.collection else ''})"
 
 
 class UserCardScore(Model):
@@ -86,7 +86,7 @@ class UserCardScore(Model):
         )
 
     def __str__(self):
-        return f"Score for {self.user} on {self.card.concept}"
+        return f"{self.card.concept}/{self.user}"
 
     def process_revision(self, revision: RevisionStatus) -> bool:
         last_interval = timezone.now() - self.last_revision_timestamp
@@ -95,24 +95,17 @@ class UserCardScore(Model):
             self.number_of_failed_revisions += 1
             next_interval = timedelta(minutes=5)
         else:
-            initial_intervals = [1200, 60, 5, 0]  # in minutes
-            while initial_intervals and last_interval <= timedelta(
-                minutes=initial_intervals.pop() * 1.5
-            ):
-                pass
-            if initial_intervals:
-                next_interval = timedelta(minutes=initial_intervals.pop())
-            else:
-                next_interval = (
-                    last_interval
-                    * max(1.3, 2.5 - 0.1 * self.number_of_failed_revisions)
-                    * random.uniform(1, 1.01)
-                )
+            next_interval = (
+                last_interval
+                * max(1.3, 2.5 - 0.1 * self.number_of_failed_revisions)
+                * random.uniform(1, 1.01)
+            )
         self.last_revision = revision
         self.last_revision_timestamp = timezone.now()
-        logger.info(
-            f"Next interval for card ({self.card.pk}){self.card}: {next_interval}"
-        )
+        if revision != RevisionStatus.AGAIN and next_interval < timedelta(minutes=7):
+            logger.warning(
+                f"Next interval for card ({self.card.pk}){self.card} is much lower than expected: {next_interval}"
+            )
         self.next_revision_timestamp = timezone.now() + next_interval
         self.save()
         self.card.update_success_rate()
