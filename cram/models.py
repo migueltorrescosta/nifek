@@ -28,9 +28,7 @@ class Collection(Model):
     owner = ForeignKey(
         User, null=False, on_delete=PROTECT, related_name="cram_collections"
     )
-    starred_by = ManyToManyField(
-        User, null=True, blank=True, related_name="starred_collections"
-    )
+    starred_by = ManyToManyField(User, blank=True, related_name="starred_collections")
     title = TextField()
     description = TextField()
     updated_on = DateTimeField(auto_now=True, null=False)
