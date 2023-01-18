@@ -1,6 +1,6 @@
 # [NiFeK](https://nifek.com)
 
-![Known Vulnerabilities](https://snyk.io/test/github/migueltorrescosta/nifek/badge.svg)
+[![Known Vulnerabilities](https://snyk.io/test/github/migueltorrescosta/nifek/badge.svg)](https://snyk.io/test/github/migueltorrescosta/nifek)
 
 [Personal project](https://nifek.com) to support all the tools I wanted to have available 🪞
 Initial structure based on a template blog app https://djangocentral.com/building-a-blog-application-with-django/
