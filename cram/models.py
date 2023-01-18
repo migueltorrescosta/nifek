@@ -1,3 +1,4 @@
+import logging
 import random
 from datetime import timedelta
 
@@ -22,6 +23,7 @@ from .enums import RevisionStatus
 from .exceptions import NoNextCardException
 
 PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(1)]
+logger = logging.getLogger(__name__)
 
 
 class Collection(Model):
@@ -108,6 +110,9 @@ class UserCardScore(Model):
                 )
         self.last_revision = revision
         self.last_revision_timestamp = timezone.now()
+        logger.info(
+            f"Next interval for card ({self.card.pk}){self.card}: {next_interval}"
+        )
         self.next_revision_timestamp = timezone.now() + next_interval
         self.save()
         self.card.update_success_rate()
