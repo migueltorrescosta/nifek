@@ -91,19 +91,21 @@ class UserCardScore(Model):
         last_interval = max(last_interval, timedelta(seconds=1))
         if revision == RevisionStatus.AGAIN:
             self.number_of_failed_revisions += 1
-        initial_intervals = [1200, 60, 5]  # in minutes
-        while initial_intervals and last_interval <= timedelta(
-            minutes=initial_intervals.pop()
-        ):
-            pass
-        if initial_intervals:
-            next_interval = timedelta(minutes=initial_intervals.pop())
+            next_interval = timedelta(minutes=5)
         else:
-            next_interval = (
-                last_interval
-                * max(1.3, 2.5 - 0.1 * self.number_of_failed_revisions)
-                * random.uniform(1, 1.01)
-            )
+            initial_intervals = [1200, 60, 5, 0]  # in minutes
+            while initial_intervals and last_interval <= timedelta(
+                minutes=initial_intervals.pop() * 1.5
+            ):
+                pass
+            if initial_intervals:
+                next_interval = timedelta(minutes=initial_intervals.pop())
+            else:
+                next_interval = (
+                    last_interval
+                    * max(1.3, 2.5 - 0.1 * self.number_of_failed_revisions)
+                    * random.uniform(1, 1.01)
+                )
         self.last_revision = revision
         self.last_revision_timestamp = timezone.now()
         self.next_revision_timestamp = timezone.now() + next_interval
