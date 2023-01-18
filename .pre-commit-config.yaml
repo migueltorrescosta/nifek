@@ -72,6 +72,14 @@ repos:
     hooks:
       - id: add-ssh-git-signing-key
       - id: remove-ssh-git-signing-key
+-   repo: https://github.com/ecugol/pre-commit-hooks-django
+    rev: v0.4.0
+    hooks:
+    -   id: check-untracked-migrations
+    # -   id: check-unapplied-migrations
+    # -   id: check-absent-migrations
+    # -   id: po-location-format
+    #     args: ["--add-location", "file"]
 # -   repo: https://github.com/igorshubovych/markdownlint-cli
 #     rev: v0.33.0
 #     hooks:
@@ -81,15 +89,7 @@ repos:
 #     hooks:
 #     -   id: detect-secrets
 #         args: ['--exclude-secrets', '*.html']
-# -   repo: https://github.com/ecugol/pre-commit-hooks-django
-#     rev: v0.4.0
-#     hooks:
-#     -   id: check-untracked-migrations
-#     -   id: check-unapplied-migrations
-#     -   id: check-absent-migrations
-#     -   id: po-location-format
-#         args: ["--add-location", "file"]
-# -   repo: git://github.com/FalconSocial/pre-commit-mirrors-pep257
-#     sha: ''
+# -   repo: https://github.com/FalconSocial/pre-commit-mirrors-pep257
+#     rev: 'v0.3.3'
 #     hooks:
 #     -   id: pep257
