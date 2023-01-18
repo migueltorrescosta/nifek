@@ -182,5 +182,5 @@ class UserCardScore(Model):
             .values("card__concept")
         }
         raise NoNextCardException(
-            f"You have no cards to review at the moment. Come back in {time}. The cards you most need to revise are: {', '.join(cards_to_revise)}"
+            f"Your next review will be available in {time}. In the meantime, take a well deserved break 💤\n{'The cards you most need to revise are: ' + ', '.join(cards_to_revise) if cards_to_revise else ''}"
         )
