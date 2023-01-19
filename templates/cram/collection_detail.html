@@ -17,7 +17,7 @@
                 <p class="card-text ">{{ collection.description }}</p>
                 {% for card in collection.cram_cards.all|dictsort:"success_rate" reversed %}
                     {% widthratio card.success_rate 1 100 as success_width %}
-                    <p class="my-0 "><strong>{{ card.concept }}a</strong>: {{ card.description }}</p>
+                    <p class="my-0 "><strong>{{ card.concept }}</strong>: {{ card.description }}</p>
                     <div class="progress" style="height: 3px;">
                         <div class="progress-bar bg-success" role="progressbar" style="width: {{ success_width }}%" aria-valuenow="{{ success_width }}" aria-valuemin="0" aria-valuemax="{{ success_width|add:100}}"></div>
                     </div>
