@@ -11,7 +11,6 @@
                     <br>
                     {{ number_of_cards_to_review }} / {{ number_of_cards_to_learn }}</p></small>
                 <h3>{{ user_card_score.card.concept }}</h3>
-                <small>Deck: {{ user_card_score.card.collection.title }}</small>
                 <form method="post" class="form-inline" action="{% url 'cram:submit_review' user_card_score.pk %}">
                     {% csrf_token %}
                     <div class="d-flex justify-content-end">
@@ -22,11 +21,14 @@
                         <button type="submit" name="last_revision" value="3" class="btn mx-2 btn-success float-right my-2">Easy</button>
                     </div>
                 </form>
+                <small>
+                    <a href="{% url 'cram:unstar_collection' user_card_score.card.collection.pk %}">Stop studying</a> the deck <strong>{{ user_card_score.card.collection.title }}</strong>
+                </small>
                 <small class="float-right">{{ user_card_score.card.description }}</small>
             </div>
         </div>
         {% block sidebar %} {% include 'sidebars/cram_sidebar.html' %} {% endblock sidebar %}
     </div>
 </div>
-
+</strong>
 {% endblock content %}

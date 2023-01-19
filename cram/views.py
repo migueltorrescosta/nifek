@@ -8,7 +8,7 @@ from django.views import generic
 
 from .enums import RevisionStatus
 from .exceptions import NoNextCardException
-from .forms import CardForm, CollectionForm, UserCardScoreForm
+from .forms import CardForm, CollectionForm
 from .models import Card, Collection, UserCardScore
 
 
