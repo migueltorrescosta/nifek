@@ -21,8 +21,12 @@
                         <button type="submit" name="last_revision" value="3" class="btn mx-2 btn-success float-right my-2">Easy</button>
                     </div>
                 </form>
+                {% widthratio user_card_score.card.success_rate 1 100 as success_width %}
+                <div class="progress" style="height: 3px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ success_width }}%" aria-valuenow="{{ success_width }}" aria-valuemin="0" aria-valuemax="{{ success_width|add:100}}"></div>
+                </div>
                 <small>
-                    <a href="{% url 'cram:unstar_collection' user_card_score.card.collection.pk %}">Stop studying</a> the deck <strong>{{ user_card_score.card.collection.title }}</strong>
+                    <a href="{% url 'cram:unstar_collection' user_card_score.card.collection.pk %}">Stop studying</a> the deck <a href="{% url 'cram:collection_detail' user_card_score.card.collection.pk %}">{{ user_card_score.card.collection.title }}</a>
                 </small>
                 <small class="float-right">{{ user_card_score.card.description }}</small>
             </div>

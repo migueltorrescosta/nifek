@@ -2,8 +2,6 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
-
 <div class="container">
     <div class="row">
         <div class="col-md-8 card mb-4  mt-3 left  top">
@@ -17,15 +15,14 @@
                 </p>
                 <h3>{{ collection.title }}</h3>
                 <p class="card-text ">{{ collection.description }}</p>
-                <div class="row" data-masonry='{"percentPosition": true }' >
-                    {% for card in collection.cram_cards.all %}
-                    <div class="card my-0 mx-0 col-md-5">
-                        <div class="card-body">
-                            <p class="my-0 "><strong>{{ card.concept }}</strong><br> {{ card.description }}</p>
-                        </div>
+                {% for card in collection.cram_cards.all|dictsort:"success_rate" reversed %}
+                    {% widthratio card.success_rate 1 100 as success_width %}
+                    <p class="my-0 "><strong>{{ card.concept }}a</strong>: {{ card.description }}</p>
+                    <div class="progress" style="height: 3px;">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ success_width }}%" aria-valuenow="{{ success_width }}" aria-valuemin="0" aria-valuemax="{{ success_width|add:100}}"></div>
                     </div>
+                    <br>
                 {% endfor %}
-                </div>
             </div>
         </div>
         {% block sidebar %} {% include 'sidebars/cram_sidebar.html' %} {% endblock sidebar %}
