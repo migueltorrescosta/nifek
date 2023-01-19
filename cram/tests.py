@@ -26,7 +26,13 @@ class HoldTestCase(TestCase):
         self.permanent_collection_star.starred_by.remove(self.user)
         self.permanent_collection_unstar.starred_by.add(self.user)
 
-    def test_http_get_homepage(self):
+    def test_http_get_homepage_logged_in(self):
+        self.client.logout()
+        response = self.client.get(reverse("cram:home"), follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_http_get_homepage_logged_out(self):
+        self.client.force_login(self.user)
         response = self.client.get(reverse("cram:home"), follow=True)
         self.assertEqual(response.status_code, 200)
 

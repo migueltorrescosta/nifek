@@ -13,7 +13,10 @@ from .models import Card, Collection, UserCardScore
 
 
 def home(request):
-    url = reverse("cram:collections")
+    if request.user.is_authenticated:
+        url = reverse("cram:review")
+    else:
+        url = reverse("cram:collections")
     return redirect(url)
 
 
