@@ -59,7 +59,7 @@ class Card(Model):
     def update_success_rate(self) -> bool:
         numerator = self.cram_scores.filter(last_revision=RevisionStatus.AGAIN).count()
         denominator = self.cram_scores.count()
-        self.success_rate = (numerator + 1) / (denominator + 2)
+        self.success_rate = 1 - ((numerator + 1) / (denominator + 2))
         self.save()
         return True
 
