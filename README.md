@@ -1,6 +1,17 @@
 # [NiFeK](https://nifek.com)
 
 [![Known Vulnerabilities](https://snyk.io/test/github/migueltorrescosta/nifek/badge.svg)](https://snyk.io/test/github/migueltorrescosta/nifek)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/migueltorrescosta/nifek)
+![GitHub repo size](https://img.shields.io/github/repo-size/migueltorrescosta/nifek)
+![GitHub repo file count](https://img.shields.io/github/directory-file-count/migueltorrescosta/nifek)
+![Lines of code](https://img.shields.io/tokei/lines/github/migueltorrescosta/nifek)
+![GitHub issues](https://img.shields.io/github/issues/migueltorrescosta/nifek)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/migueltorrescosta/nifek)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/migueltorrescosta/nifek)
+![Security Headers](https://img.shields.io/security-headers?url=https%3A%2F%2Fnifek.com%3A443%2F)
+![Website](https://img.shields.io/website?down_color=red&down_message=offline&up_color=green&up_message=online&url=https%3A%2F%2Fnifek.com)
+![GitHub last commit](https://img.shields.io/github/last-commit/migueltorrescosta/nifek)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/migueltorrescosta/nifek/main)
 
 [Personal project](https://nifek.com) to support all the tools I wanted to have available 🪞
 Initial structure based on a template blog app https://djangocentral.com/building-a-blog-application-with-django/
