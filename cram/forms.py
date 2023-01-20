@@ -1,4 +1,4 @@
-from django.forms import ChoiceField, ModelForm, CharField
+from django.forms import CharField, ChoiceField, ModelForm
 
 from .enums import RevisionStatus
 from .models import Card, Collection, UserCardScore

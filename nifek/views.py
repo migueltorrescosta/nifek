@@ -1,6 +1,7 @@
+import random
+
 from django.shortcuts import render
 from django.urls import reverse
-import random
 
 
 def home(request):

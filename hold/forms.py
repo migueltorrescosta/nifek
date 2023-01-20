@@ -1,5 +1,7 @@
 from django.forms import ModelForm
+
 from .models import Entity, Stake
+
 
 # Create the form class.
 class EntityForm(ModelForm):

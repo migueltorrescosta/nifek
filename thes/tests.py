@@ -1,7 +1,9 @@
-from django.test import TestCase, Client
-from .models import Thesis, Tag
-from accounts.models import User
+from django.test import Client, TestCase
 from django.urls import reverse
+
+from accounts.models import User
+
+from .models import Tag, Thesis
 
 
 class ThesTestCase(TestCase):

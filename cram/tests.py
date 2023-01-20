@@ -3,8 +3,8 @@ from django.urls import reverse
 
 from accounts.models import User
 
-from .models import Card, Collection, UserCardScore
 from .enums import RevisionStatus
+from .models import Card, Collection, UserCardScore
 
 
 class HoldTestCase(TestCase):

@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.views import generic
+from django.views.generic import DetailView
 
 from .forms import EntityForm, StakeForm
 from .models import Entity, Stake
@@ -83,7 +83,7 @@ def post_stake(request):
     return HttpResponseRedirect(request.META.get("HTTP_REFERER", reverse("hold:home")))
 
 
-class EntityDetail(generic.DetailView):
+class EntityDetail(DetailView):
     model = Entity
     template_name = "hold/entity_detail.html"
 

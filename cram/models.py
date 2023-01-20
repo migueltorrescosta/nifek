@@ -19,9 +19,9 @@ from django.utils import timezone
 
 from accounts.models import User
 
-from .settings import MINIMUM_TIME_INTERVAL
 from .enums import RevisionStatus
 from .exceptions import NoNextCardException
+from .settings import MINIMUM_TIME_INTERVAL
 
 PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(1)]
 logger = logging.getLogger(__name__)

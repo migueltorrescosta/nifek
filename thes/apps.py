@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class ThesConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'thes'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "thes"

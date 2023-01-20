@@ -3,11 +3,12 @@ import logging
 from django.contrib import messages
 from django.contrib.postgres.search import SearchVector
 from django.db.models import Count
+from django.db.utils import DataError
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views import View, generic
+from django.views import View
+from django.views.generic import DetailView, ListView
 from django.views.generic.detail import SingleObjectMixin
-from django.db.utils import DataError
 
 from .forms import ThesisForm
 from .models import Property, Tag, Thesis
@@ -15,7 +16,7 @@ from .models import Property, Tag, Thesis
 logger = logging.getLogger(__name__)
 
 
-class ThesisList(generic.ListView):
+class ThesisList(ListView):
     template_name = "thes/index.html"
 
     def get_queryset(self):
@@ -64,7 +65,7 @@ class ThesisList(generic.ListView):
         return HttpResponseRedirect("/thes/")
 
 
-class ThesisDetail(generic.DetailView):
+class ThesisDetail(DetailView):
     model = Thesis
     template_name = "thes/thesis_detail.html"
 

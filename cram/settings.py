@@ -1,5 +1,6 @@
-from datetime import timedelta
 from collections import defaultdict
+from datetime import timedelta
+
 from .enums import RevisionStatus
 
 MINIMUM_TIME_INTERVAL = defaultdict(lambda: timedelta(minutes=5))

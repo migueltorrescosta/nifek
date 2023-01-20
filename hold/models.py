@@ -1,18 +1,20 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models import (
-    Model,
-    ForeignKey,
-    CharField,
-    TextField,
-    DateTimeField,
-    FloatField,
-    BigIntegerField,
     CASCADE,
     PROTECT,
+    BigIntegerField,
+    CharField,
+    DateTimeField,
+    FloatField,
+    ForeignKey,
+    Model,
+    TextField,
 )
 from django.utils import timezone
+
 from accounts.models import User
+
 from .queries import stakes_raw_queries
-from django.core.validators import MinValueValidator, MaxValueValidator
 
 PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(1)]
 

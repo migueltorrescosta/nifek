@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
-from django.views import generic
+from django.views.generic import DetailView, ListView, UpdateView
 
 from .enums import RevisionStatus
 from .exceptions import NoNextCardException
@@ -80,7 +80,7 @@ def review(request):
     return render(request, "cram/review.html", context=context)
 
 
-class UserCardScoreDetailView(generic.UpdateView):
+class UserCardScoreDetailView(UpdateView):
 
     model = UserCardScore
 
@@ -92,7 +92,7 @@ class UserCardScoreDetailView(generic.UpdateView):
         return redirect("cram:review")
 
 
-class CollectionListView(generic.ListView):
+class CollectionListView(ListView):
     model = Collection
     template_name = "cram/index.html"
 
@@ -147,7 +147,7 @@ class CollectionListView(generic.ListView):
         )
 
 
-class CollectionDetail(generic.DetailView):
+class CollectionDetail(DetailView):
     model = Collection
     template_name = "cram/collection_detail.html"
 

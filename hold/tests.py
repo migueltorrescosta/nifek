@@ -1,7 +1,9 @@
-from django.test import TestCase, Client
-from .models import Entity, Stake
-from accounts.models import User
+from django.test import Client, TestCase
 from django.urls import reverse
+
+from accounts.models import User
+
+from .models import Entity, Stake
 
 
 class HoldTestCase(TestCase):
