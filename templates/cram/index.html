@@ -26,7 +26,7 @@
                 <div class="list-group-item list-group-item-action" data-toggle="list" role="tab">
                     <a href="{% url 'cram:collection_detail' collection.id  %}"><h5>{{ collection.title }}</h5></a>
                     {{ collection.description }}<br>
-                    <small>🗓 {{ collection.created_on|date:'l, d E Y'}} 🖊{{collection.owner }} 📒 {{ collection.n_cards }} cards </small>
+                    <small>🗓 {{ collection.created_on|date:'l, d E Y'}} 🖊{{collection.owner }} 📒 {{ collection.n_cards }} cards ⭐ {{ collection.stars }} </small>
                 </div>
             {% endfor %}
         </div>

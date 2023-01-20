@@ -106,7 +106,7 @@ class CollectionListView(generic.ListView):
             queryset = queryset.filter(owner=self.request.user)
         queryset = (
             queryset.annotate(n_cards=Count("cram_cards"))
-            .annotate(stars=Count("starred_by"))
+            .annotate(stars=Count("starred_by", distinct=True))
             .order_by("-stars")
         )
         return queryset
