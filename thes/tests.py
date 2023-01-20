@@ -20,6 +20,11 @@ class ThesTestCase(TestCase):
         response = self.client.get(reverse("thes:home"))
         self.assertEqual(response.status_code, 200)
 
+    def test_http_get_thesis_list_with_query(self):
+        relative_url = reverse("thes:home") + "?q=Test"
+        response = self.client.get(relative_url)
+        self.assertEqual(response.status_code, 200)
+
     def test_http_get_thesis(self):
         relative_url = reverse(
             "thes:thesis_detail", kwargs={"pk": self.permanent_thesis.pk}
