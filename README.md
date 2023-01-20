@@ -56,7 +56,7 @@ _Remark: Replace `podman-docker` commands with `docker-compose` depending on whe
 
 ## Tests
 
-To run tests locally, `docker exec` into the running django container, and run `python manage.py test`. TO also get coverage, run `make coverage` inside the container. This will generate an `htmlcov` folder which you can see in firefox. Due to containerization, you might need to change the `htmlcov` folder permissions via `sudo chown -R <username>` and `sudo chgrp -R <username>` before opening the `html` files with your browser.
+To run tests locally, `docker exec` into the running django container, and run `python manage.py test`. To also get coverage, run `make coverage` inside the container. This will generate an `htmlcov` folder which you can see in firefox. Due to containerization, you might need to change the `htmlcov` folder permissions via `sudo chown -R <username>` and `sudo chgrp -R <username>` before opening the `html` files with your browser. This can be done outside docker via the command `make perms`.
 
 On the server, `dokku` takes care of running tests before deploying any image.
 
