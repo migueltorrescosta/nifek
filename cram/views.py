@@ -104,7 +104,11 @@ class CollectionListView(generic.ListView):
             and queryset.filter(owner=self.request.user).exists()
         ):
             queryset = queryset.filter(owner=self.request.user)
-        queryset = queryset.annotate(count=Count("cram_cards"))
+        queryset = (
+            queryset.annotate(n_cards=Count("cram_cards"))
+            .annotate(stars=Count("starred_by"))
+            .order_by("-stars")
+        )
         return queryset
 
     def get_context_data(self, **kwargs):
