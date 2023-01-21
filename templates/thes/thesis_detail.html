@@ -1,5 +1,9 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
 
+{% block title %}Thes - NiFeK{% endblock %}
+{% block page_description %}{{ object.content }}{% endblock %}
+
+{% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-8 card mb-4  mt-3 left  top">
@@ -11,5 +15,4 @@
         {% block sidebar %} {% include 'sidebars/base_sidebar.html' %} {% endblock sidebar %}
     </div>
 </div>
-
 {% endblock content %}
