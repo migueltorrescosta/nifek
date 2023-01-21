@@ -1,6 +1,6 @@
 import logging
-import random
 from datetime import timedelta
+from random import uniform
 
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models import (
@@ -21,7 +21,7 @@ from accounts.models import User
 
 from .enums import RevisionStatus
 from .exceptions import NoNextCardException
-from .settings import MINIMUM_TIME_INTERVAL
+from .settings import MINIMUM_TIME_INTERVAL, RANDOMNESS_RANGE
 
 PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(1)]
 logger = logging.getLogger(__name__)
@@ -95,7 +95,8 @@ class UserCardScore(Model):
         minimum_time_interval = MINIMUM_TIME_INTERVAL[revision]
         if revision != RevisionStatus.AGAIN:
             multiplier = max(1.3, 2.5 - 0.1 * self.number_of_failed_revisions)
-            next_interval = last_interval * multiplier * random.uniform(1, 1.01)
+            random_multiplier = uniform(1, 1 + RANDOMNESS_RANGE)
+            next_interval = last_interval * multiplier * random_multiplier
         else:
             self.number_of_failed_revisions += 1
 
