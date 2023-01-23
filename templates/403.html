@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mt-3 left">
+            <p class="card-text">Experimental stop for small apps</p>
+            <div class="row" data-masonry='{"percentPosition": true }' >
+                <div class="card my-1 mx-1 col-md-8">
+                    <div class="card-body my-1">
+                        <h3>
+                            🛑 Stop right there 🛑
+                        </h3>
+                        <p class="card-text aligned-left small">
+                            You tried to do something you have no permission to do.<br>Naughty naughty.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% block sidebar %} {% include 'sidebars/base_sidebar.html' %} {% endblock sidebar %}
+    </div>
+</div>
+{%endblock%}

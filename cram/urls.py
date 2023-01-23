@@ -14,6 +14,11 @@ urlpatterns = [
         name="collection_detail",
     ),
     path(
+        "collections/<int:pk>/delete",
+        views.CollectionDelete.as_view(),
+        name="delete_collection",
+    ),
+    path(
         "submit_review/<int:pk>/",
         views.UserCardScoreDetailView.as_view(),
         name="submit_review",

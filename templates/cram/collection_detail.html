@@ -27,6 +27,15 @@
                     </div>
                     <br>
                 {% endfor %}
+                {% if collection.owner == request.user %}
+                    <form method="post" class="form-inline float-right" action="{% url 'cram:delete_collection' collection.pk %}">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-end">
+                            <!-- These values need to match the ones in the RevisionStatus Enu-->
+                            <button type="submit" class="btn mx-2 btn-outline-danger float-right my-2">Delete Collection containing {{ collection.cram_cards.count }} cards </button>
+                        </div>
+                    </form>
+                {% endif %}
             </div>
         </div>
         {% block sidebar %} {% include 'sidebars/cram_sidebar.html' %} {% endblock sidebar %}

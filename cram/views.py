@@ -1,10 +1,11 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
-from django.views.generic import DetailView, ListView, UpdateView
+from django.views.generic import DetailView, ListView, UpdateView, DeleteView
 
 from .enums import RevisionStatus
 from .exceptions import NoNextCardException
@@ -205,3 +206,19 @@ class CollectionDetail(DetailView):
                 reverse("cram:collection_detail", kwargs={"pk": pk}),
             )
         )
+
+
+class CollectionDelete(PermissionRequiredMixin, DeleteView):
+    model = Collection
+    success_url = reverse_lazy("cram:collections")
+
+    def has_permission(self):
+        self.object = self.get_object()
+        user_is_owner = self.object.owner == self.request.user
+        if not user_is_owner:
+            messages.add_message(
+                self.request,
+                messages.ERROR,
+                "You cannot delete a Collection you do not own",
+            )
+        return user_is_owner
