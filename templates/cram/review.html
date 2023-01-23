@@ -11,9 +11,8 @@
         <div class="col-md-8 card mt-3 left  top">
             <div class="card-body my-1">
                 <small><p class="float-right text-right">
-                    cards unreviewed / to learn
-                    <br>
-                    {{ number_of_cards_to_review }} / {{ number_of_cards_to_learn }}</p></small>
+                    {{ number_of_cards_to_review }} cards to review and {{ number_of_cards_to_learn }} to learn
+                </p></small>
                 <h3>{{ user_card_score.card.concept }}</h3>
                 <form method="post" class="form-inline" action="{% url 'cram:submit_review' user_card_score.pk %}">
                     {% csrf_token %}
