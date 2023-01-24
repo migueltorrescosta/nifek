@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.db.models import Count
+from django.db.models import Count, QuerySet, Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
@@ -97,7 +97,7 @@ class CollectionListView(ListView):
     model = Collection
     template_name = "cram/index.html"
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet[Collection]:
         queryset = super().get_queryset()
         if (
             self.request.user.is_authenticated
@@ -105,6 +105,8 @@ class CollectionListView(ListView):
             and queryset.filter(owner=self.request.user).exists()
         ):
             queryset = queryset.filter(owner=self.request.user)
+        if self.request.user.is_authenticated:
+            queryset = queryset.annotate(starred=Q(starred_by=self.request.user))
         queryset = (
             queryset.annotate(n_cards=Count("cram_cards"))
             .annotate(stars=Count("starred_by", distinct=True))

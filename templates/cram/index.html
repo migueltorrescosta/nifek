@@ -28,6 +28,16 @@
         <div class="list-group col-md-8 mt-3 left" id="myList" role="tablist">
             {% for collection in collection_list %}
                 <div class="list-group-item list-group-item-action" data-toggle="list" role="tab">
+                    {% if request.user.is_authenticated %}
+                        <p class="card-text float-right">
+                            {% if collection.starred %}
+                                <a href="{% url 'cram:unstar_collection' collection.pk %}" class="btn btn-outline-danger btn-sm">Unstar</a>
+                            {% else %}
+                                <a href="{% url 'cram:star_collection' collection.pk %}" class="btn btn-outline-success btn-sm">Star</a>
+                            {% endif %}
+                        </p>
+                    {% endif %}
+
                     <a href="{% url 'cram:collection_detail' collection.id  %}"><h5>{{ collection.title }}</h5></a>
                     {{ collection.description }}<br>
                     <small>🗓 {{ collection.created_on|date:'l, d E Y'}} 🖊{{collection.owner }} 📒 {{ collection.n_cards }} cards ⭐ {{ collection.stars }} </small>
