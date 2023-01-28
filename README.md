@@ -18,32 +18,6 @@
 [Personal project](https://nifek.com) to support all the tools I wanted to have available 🪞
 Initial structure based on a template blog app https://djangocentral.com/building-a-blog-application-with-django/
 
-# 📝 ToDo
-
-## 💻 Project Quality
-
-- Add Load Testing to the app, probably with [Locust](https://www.section.io/engineering-education/how-to-test-django-applications-with-locust/).
-- Add [code coverage](https://adamj.eu/tech/2019/04/30/getting-a-django-application-to-100-percent-coverage/) as a GitHub Actions Artifact. [This approach](https://www.hacksoft.io/blog/github-actions-in-action-setting-up-django-and-postgres) seems promising. FOr the time we can manually run coverage, which lies at 93% 🥳
-- For SEO Optimization add a `sitemap.xml` and follow the [suggestions from janowski](https://www.janowski.dev/articles/seo-for-django-5-methods-to-improve-seo/).
-
-## 📱 New Apps
-
-- **Mott:** Mottery App.
-- **Diam:** Diagram maker to increase our Mental Bandwith.
-- **Ping:** `Uptime Robot` like app.
-- **Mony:** Visually compare Monetary Values.
-- **Paol:** Create a Polling system that allows for multiple questions. On Visualization, allow for the viewing of Paretto Optimal only points.
-- **Pink:** Promise tracker for various events. Sends out a monthly email with the status updates of all subscribers of an event.
-- **Meas:** Implementation of the framework described on `How To Measure Anything`
-- **Fute:** App to organize football matches easily (i.e. track who is coming on a first come basis / potentially other options )
-- **XP:** App focused on which experiences to prioritize for your life ( Similar to a Recommendations for one time events, with Clustering analysis for suggestions ).
-
-## ☎ Old Apps
-
-- **Core:** Add user Profile Page!
-- **Thes:** Allow users to tag/untag existing Thesis
-- **Cram:** Reach out to Michael Nielsen for possible feedback,having read [his post](http://augmentingcognition.com/ltm.html)
-
 # 📚 Tech Stack
 
 - [Django](https://www.djangoproject.com/) as the core Framework.
