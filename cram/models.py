@@ -21,7 +21,7 @@ from accounts.models import User
 
 from .enums import RevisionStatus
 from .exceptions import NoNextCardException
-from .settings import MINIMUM_TIME_INTERVAL, RANDOMNESS_RANGE
+from .settings import MINIMUM_TIME_INTERVAL, RANDOMNESS_RANGE, MAXIMUM_UNKNOWN_CARDS
 
 PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(1)]
 logger = logging.getLogger(__name__)
@@ -152,7 +152,7 @@ class UserCardScore(Model):
             .count()
         )
 
-        if new_card is not None and n_cards_being_learnt <= 5:
+        if new_card is not None and n_cards_being_learnt < MAXIMUM_UNKNOWN_CARDS:
 
             next_user_card_score = UserCardScore.objects.create(
                 card=new_card,
