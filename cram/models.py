@@ -170,11 +170,14 @@ class UserCardScore(Model):
             .first()
         ).next_revision_timestamp
         timedelta = next_card_timestamp - timezone.now()
+        seconds = 1 + int(timedelta.total_seconds())
         minutes = 1 + int(timedelta.total_seconds() / 60)
-        if minutes <= 60:
+        hours = 1 + int(minutes / 3600)
+        if seconds <= 100:
+            time = f"{seconds} second{'s' if seconds != 1 else ''}"
+        elif minutes <= 60:
             time = f"{minutes} minute{'s' if minutes != 1 else ''}"
         else:
-            hours = 1 + int(minutes / 3600)
             time = f"{hours} hour{'s' if hours != 1 else ''}"
         cards_to_revise = {
             c["card__concept"]
