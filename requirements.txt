@@ -10,4 +10,4 @@ psycopg2==2.9.5
 psycopg2-binary==2.9.5
 pyparsing==3.0.9
 sqlparse==0.4.3
-whitenoise==6.3.0
+whitenoise==6.4.0
