@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.postgres",
+    "crispy_bootstrap4",
     "crispy_forms",
     "magiclink",
     "accounts",
