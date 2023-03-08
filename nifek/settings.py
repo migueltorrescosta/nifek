@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.postgres",
     "crispy_forms",
-    # "crispy_bootstrap4",
     "magiclink",
     "accounts",
     "thes",
