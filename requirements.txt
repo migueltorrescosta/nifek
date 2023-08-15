@@ -1,6 +1,6 @@
 asgiref==3.7.2
 Brotli==1.0.9
-dj-database-url==1.2.0
+dj-database-url==2.1.0
 Django==4.2.3
 django-crispy-forms==1.14.0
 django-magiclink==1.2.0
