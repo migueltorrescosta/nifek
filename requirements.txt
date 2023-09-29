@@ -4,7 +4,7 @@ dj-database-url==2.1.0
 Django==4.2.4
 django-crispy-forms==1.14.0
 django-magiclink==1.2.0
-gunicorn==20.1.0
+gunicorn==21.2.0
 packaging==23.1
 psycopg2==2.9.6
 psycopg2-binary==2.9.8
