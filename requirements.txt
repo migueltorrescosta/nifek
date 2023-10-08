@@ -7,7 +7,7 @@ django-magiclink==1.2.0
 gunicorn==21.2.0
 packaging==23.2
 psycopg2==2.9.9
-psycopg2-binary==2.9.8
+psycopg2-binary==2.9.9
 pyparsing==3.1.0
 sqlparse==0.4.3
 whitenoise==6.5.0
