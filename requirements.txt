@@ -11,3 +11,4 @@ psycopg2-binary==2.9.9
 pyparsing==3.1.0
 sqlparse==0.4.3
 whitenoise==6.6.0
+zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
